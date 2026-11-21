@@ -2,6 +2,8 @@
 
 The demonstrated gap is coordination around pacman's dependency preparation: a foreign application's installed ABI bounds can block an OS update, while a new publisher binary can require a newer ABI than the distro snapshot. A transaction hook cannot build a remedy for a transaction that fails before hooks run. The coordinator belongs before the native transaction; dependency resolution belongs in libalpm.
 
+The evidence-backed recommendation is now submitted as [omacom/omarchy#19665](https://github.com/omacom/omarchy/pull/19665). It records the reproduced snapshot/AUR mismatch and recommends a package-neutral preflight contract, with links to this working POC and its successful host/VM validation. General automatic activation remains a follow-up implementation scope.
+
 ## 1. Omarchy: smallest useful integration
 
 Start discussion with the reproducible Gaze/OpenCV failure, the passing native preparation and container smoke evidence, and the small [integration draft](integration/omarchy-update.patch). Propose an opt-in application compatibility phase between keyring preparation and the existing system package update. Keep builds unprivileged and outside the package transaction lock. Keep the existing snapshot, systemd scope, migrations and boot checks.

@@ -7,6 +7,8 @@ An opt-in coordinator for a tracked application's compatibility across an Arch/O
 gaze = "prefer-upstream"
 ```
 
+The reproduced edge case, recommended native integration boundary and validation are submitted upstream in [omacom/omarchy#19665](https://github.com/omacom/omarchy/pull/19665). The application build change is [GunduLabs/gaze#1027](https://github.com/GunduLabs/gaze/pull/1027).
+
 The coordinator prepares the complete target transaction with **libalpm**, using a private copy of pacman's databases. It selects compatible Gaze publisher packages first, a previously built compatible source package second, and a fresh source build when necessary. A compatible publisher package replaces a local source build on a subsequent request, including when the publisher's packaging revision is lower. Nothing is installed on the host by the planning or staging commands.
 
 ## Local use
