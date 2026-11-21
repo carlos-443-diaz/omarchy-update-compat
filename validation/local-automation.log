@@ -1,0 +1,11 @@
+Gaze  CHECKING   Installed 0.5.2-1.1; checking the target system.
+Gaze  KEEP       Installed build still works; no cached artifact or rebuild is needed.
+Gaze  PLAN       0.5.2: The installed local build matches the reviewed release and still satisfies the complete target transaction.
+Gaze  KEEP       Installed build still works; nothing to install.
+
+Stock Omarchy updater: completed (exit 0)
+Native package database: healthy
+Pending native updates: none
+Gaze daemon: active
+Gaze doctor: healthy
+Gaze Omarchy integration: ready

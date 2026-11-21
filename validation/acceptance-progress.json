@@ -1,6 +1,6 @@
 {
   "date": "2026-11-21",
-  "status": "automated_poc_proved_local_activation_pending_authentication",
+  "status": "automated_poc_installed_and_local_upgrade_passed",
   "scope": {
     "architecture": "x86_64",
     "omarchy": "4.5.0-3",
@@ -111,7 +111,33 @@
       "actual final native image creation and repository guard; deliberately stopped before fetching/compiling again",
       "same bounded environment creation succeeded after the interrupted host probe; no VM was running",
       "actual host plan: ready KEEP with protected mode-0700 run directory"
-    ]
+    ],
+    "local_activation": {
+      "date": "2026-11-21",
+      "result": "passed",
+      "native_component_installed": true,
+      "entry_point": "omarchy-update-compat upgrade",
+      "stock_updater_exit": 0,
+      "gaze_action": "keep-installed",
+      "gaze_rebuilt": false,
+      "gaze_reinstalled": false,
+      "versions": {
+        "omarchy": "4.5.0-3",
+        "omarchy-update-compat": "0.2.0-1",
+        "opencv": "5.0.0-13",
+        "gaze-bin": "0.5.2-1.1",
+        "gaze-gui-bin": "0.5.2-1.1",
+        "gaze-omarchy-bin": "0.5.2-1.1"
+      },
+      "pending_native_updates": [],
+      "daemon_active": true,
+      "gaze_doctor_healthy": true,
+      "gaze_omarchy_doctor_ready": true,
+      "native_database_healthy": true,
+      "credential_file_deleted": true,
+      "raw_upgrade_log_sha256": "79de91b81e76712e785a06ed4f47cf607f3eb73b0210e2482c5ca454849f216a",
+      "privacy": "Raw workstation transcript and doctors retained privately; public evidence contains selected indicators, software versions and health results only. No credentials, enrollment, camera material or user paths."
+    }
   },
   "revision_scope": "The cold VM used an earlier 0.2.0 snapshot. Subsequent changes added installed-cache-independent KEEP, private transaction configuration, and an image/target verification gate. These passed focused tests. The source commit, container recipe, compiler entrypoint, ORT backport and process supervisor used by the successful cold compile are unchanged; the final environment/gate was exercised separately. Further focused privacy/input checks reject authenticated build-mirror URLs before spawning commands, protect per-run directories, and reject invalid policy types. Compiler recipes and execution arguments remain unchanged.",
   "operational_notes": [
@@ -119,14 +145,16 @@
     "One host environment probe ended with SIGKILL; its cause was not established. With no VM running, the same bounded preparation and final target gate subsequently passed. No native host package transaction occurred during either probe."
   ],
   "pending": [
-    "native component installation and one local automated upgrade: sudo authentication required",
     "locked-desktop authentication and password fallback",
     "reboot/snapshot recovery rehearsal",
     "coordinator self-upgrade and pacman/libalpm ABI-cohort acceptance",
     "native aarch64 source/runtime validation; backend remains explicitly unsupported",
     "general native-repository provider precedence; present adapter uses reviewed publisher artifacts"
   ],
-  "publication": "New implementation and evidence remain local pending activation; existing upstream PR remains documentation-only until revised.",
+  "publication": {
+    "upstream_pr": "https://github.com/omacom/omarchy/pull/19665",
+    "scope": "Opt-in native integration proposal backed by packaged implementation and sanitized proof; production promotion gates remain explicit."
+  },
   "artifacts": [
     "automatic-vm.log",
     "automation-user-tests.log",
@@ -135,7 +163,9 @@
     "omarchy-automation-full-vm.log",
     "cargo-audit.json",
     "build-environment.json",
-    "build-environment.log"
+    "build-environment.log",
+    "local-automation.json",
+    "local-automation.log"
   ],
   "prepared_native_component_sha256": "01b367d0433ccfbce057e8d43f7bff1a1052a8da3e3efd3da645f1216ad3b427"
 }

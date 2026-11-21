@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-21",
+  "result": "passed",
+  "native_component_installed": true,
+  "entry_point": "omarchy-update-compat upgrade",
+  "stock_updater_exit": 0,
+  "gaze_action": "keep-installed",
+  "gaze_rebuilt": false,
+  "gaze_reinstalled": false,
+  "versions": {
+    "omarchy": "4.5.0-3",
+    "omarchy-update-compat": "0.2.0-1",
+    "opencv": "5.0.0-13",
+    "gaze-bin": "0.5.2-1.1",
+    "gaze-gui-bin": "0.5.2-1.1",
+    "gaze-omarchy-bin": "0.5.2-1.1"
+  },
+  "pending_native_updates": [],
+  "daemon_active": true,
+  "gaze_doctor_healthy": true,
+  "gaze_omarchy_doctor_ready": true,
+  "native_database_healthy": true,
+  "credential_file_deleted": true,
+  "raw_upgrade_log_sha256": "79de91b81e76712e785a06ed4f47cf607f3eb73b0210e2482c5ca454849f216a",
+  "privacy": "Raw workstation transcript and doctors retained privately; public evidence contains selected indicators, software versions and health results only. No credentials, enrollment, camera material or user paths."
+}

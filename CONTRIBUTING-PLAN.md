@@ -2,7 +2,7 @@
 
 The demonstrated problem is coordination around pacman's dependency preparation. A foreign application's old ABI bounds can block the system transaction before AUR updates run; conversely, its new publisher binary can require an ABI newer than the selected stable snapshot. A transaction hook cannot repair a dependency failure that happens before hooks run.
 
-[omacom/omarchy#19665](https://github.com/omacom/omarchy/pull/19665) currently contains the reproduction and recommendation. The local implementation adds an optional packaged coordinator and a small native updater contract. Revise that same PR while it remains open, explaining the executable behavior and linking immutable proof. If the documentation lands first, make a linked code follow-up. Keep the complete proposal reviewable before publishing it; distinguish the historical manual host upgrade from the automatic VM result.
+[omacom/omarchy#19665](https://github.com/omacom/omarchy/pull/19665) is the contribution path for the opt-in native updater contract, backed by this packaged coordinator and immutable proof. The implementation has completed automatic VM build/deployment/repeat testing and a successful local activation. The proposal remains a reviewed integration boundary; the production promotion gates below are not implied by the POC results.
 
 ## Omarchy integration
 
