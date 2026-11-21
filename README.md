@@ -73,6 +73,14 @@ The [validation record](validation/results.json) includes the 28 passing tests, 
 
 This is a package transaction smoke test, not a complete Omarchy OS upgrade or a physical authentication test. It leaves the host's installed packages and authentication configuration unchanged.
 
+### Follow-up deployment on 2026-11-21
+
+The [host deployment record](validation/host-upgrade.json) captures the subsequent live outcome: Gaze was upgraded from 0.3.7 to the source-built 0.5.2 package group, the installed stock Omarchy updater completed successfully, both Gaze doctors reported healthy/ready, and a camera face-verification test passed. Existing enrollment was retained and migrated to owner-bound TPM encryption. The new package defaults were merged while preserving existing settings. Omarchy remained 4.5.0-3, already the latest stable package; OpenCV remained 5.0.0-13.
+
+This deployment used explicit checksum verification, root-owned artifact copies, native `pacman -U`, then the unchanged installed Omarchy updater. The host and target snapshot had the same ABI, so this is evidence for the actual Gaze upgrade path rather than a general automatic cross-ABI commit implementation. The experimental host bridge remains disabled.
+
+The [official-VM upgrade smoke](validation/vm-upgrade.log) completed the stock updater with the built Gaze packages installed and its daemon running. That empty VM has no TPM; its fixture disables template encryption, while the live workstation keeps it enabled. The [full Omarchy test suite](validation/omarchy-full-vm.log) completed 435 test files without failures in a separate official VM; six files had skipped checks. The running and installed host kernels match; a stale reboot marker from before the current boot was cleared.
+
 ## Omarchy integration draft
 
 [integration/omarchy-update.patch](integration/omarchy-update.patch) targets the commit in [integration/omarchy-base.txt](integration/omarchy-base.txt). It is a reviewable draft, not applied to the installed updater:
@@ -81,4 +89,4 @@ This is a package transaction smoke test, not a complete Omarchy OS upgrade or a
 - The existing `omarchy-update-pacman` helper imports the bundle's temporary repository and explicit managed targets, preserving Omarchy's sudo environment and systemd scope protection. Failed preparation stops before escalation.
 - The later AUR pass excludes only this update's managed targets, preventing an incompatible binary from immediately replacing the chosen build. The next plan can return to upstream automatically.
 
-The existing snapshot, migration, restart and boot-verification flow remains the owner of the update. Full host activation is deliberately outside this prototype.
+The existing snapshot, migration, restart and boot-verification flow remains the owner of the update. Automatic coordinator activation on hosts remains a separate production contribution.

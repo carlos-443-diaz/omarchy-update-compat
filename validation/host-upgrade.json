@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-21",
+  "native_omarchy_update_exit": 0,
+  "host_versions": [
+    "omarchy 4.5.0-3",
+    "opencv 5.0.0-13",
+    "gaze-bin 0.5.2-1.1",
+    "gaze-gui-bin 0.5.2-1.1",
+    "gaze-omarchy-bin 0.5.2-1.1"
+  ],
+  "gaze_doctor_healthy": true,
+  "gaze_omarchy_doctor": "ready",
+  "face_verification_exit": 0,
+  "existing_enrollment_retained": true,
+  "tpm_template_encryption": true,
+  "config_pacnew": "new defaults merged while preserving all existing configured values",
+  "gazed": [
+    "ActiveState=active",
+    "NRestarts=0"
+  ],
+  "running_kernel": "7.2.15-1-omarchy",
+  "installed_kernel": "linux-omarchy 7.2.15-1",
+  "vm_image_sha256": "fea962bb66bef8f922900018f8241e50a2d1a00268715541882479016235dc9f",
+  "official_vm_update_smoke": "passed; empty VM has no TPM, so its fixture disables template encryption",
+  "omarchy_test_all": {
+    "result": "passed",
+    "test_files": 435,
+    "files_with_skipped_checks": 6
+  },
+  "automatic_live_coordinator_activation": false,
+  "native_arm_build": "not tested",
+  "notes": [
+    "The workstation already had the latest stable Omarchy package; the completed update retained it.",
+    "Gaze was explicitly installed from checksum-verified root-owned artifacts through native pacman before the stock Omarchy update.",
+    "Current installed libraries and target snapshot had the same ABI; a real cross-ABI OS transition and rollback remain production follow-up.",
+    "A reboot marker predating the current boot was cleared; running and installed kernel versions match."
+  ],
+  "logs": {
+    "vm-upgrade.log": "8221362ccf2c8aae575c6889d1aec22403b3412b4391441db118604a0bf013d8",
+    "host-update.log": "80e2e89020257711d4877fc1fa311d2dfc7f95db73423f62fdc5418f7574a104",
+    "omarchy-full-vm.log": "7a07447af2bc8dc4ef8d68d36dfb4d8c0aab767ab5b2954513f70cb9b5de983c"
+  }
+}

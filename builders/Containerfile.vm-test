@@ -1,0 +1,3 @@
+FROM localhost/gaze-build-omarchy:local
+RUN pacman -Syu --noconfirm --needed qemu-system-x86 qemu-hw-display-virtio-gpu qemu-hw-display-virtio-vga qemu-img openssh
+ENTRYPOINT ["/bin/bash"]
