@@ -18,7 +18,7 @@ The recommended distro contribution is this small preflight/staged-candidate con
 
 Retain failed attempts where they explain the guard or resource choice, without publishing credentials, personal paths, enrollment or camera material. A checksum or local provenance record is not a vulnerability assessment, reproducible-build result, signed attestation or SLSA level.
 
-Before general production promotion, require native architecture build/runtime coverage, locked-desktop authentication and password fallback, reboot/recovery rehearsal, coordinator self-upgrade/ABI-cohort coverage, review of the privileged boundary, and an agreed maintained package/canonical catalog update channel. The current Gaze source backend explicitly stops on aarch64.
+The [physical lock checks](validation/physical-lock.json) passed face authentication plus Enter and password unlock after face cancellation on the deployed x86_64 machine. Before general production promotion, still require native architecture build/runtime coverage, reboot/recovery rehearsal, daemon-outage fallback, coordinator self-upgrade/ABI-cohort coverage, review of the privileged boundary, and an agreed maintained package/canonical catalog update channel. The current Gaze source backend explicitly stops on aarch64.
 
 ## Gaze and packaging
 

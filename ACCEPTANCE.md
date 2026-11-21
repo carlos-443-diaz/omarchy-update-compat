@@ -21,7 +21,7 @@ This checklist supplements the existing native dependency, package, runtime, and
 | Portability | Reproduce from a fresh official image for each supported architecture | Test actual native build and runtime. Explicitly reject unsupported architectures; x86_64 evidence does not establish aarch64 support. |
 | Contribution | Run focused regressions and the full required Omarchy VM suite | Existing updater ordering, keyring handling, snapshot, migrations, systemd scope and AUR processing continue to work. Review the diff and sanitize every published artifact. |
 
-The initial release gate is the x86_64 path. Native aarch64 source/runtime proof and locked-desktop authentication acceptance remain separate required results before claiming those capabilities. Two independent builds and artifact comparison are useful follow-up evidence; do not claim reproducible builds until that comparison passes.
+The initial release gate is the x86_64 path. Live face unlock and password unlock after face cancellation have passed on the current x86_64 deployment; see [the physical record](validation/physical-lock.json). Native aarch64 source/runtime, reboot/recovery and daemon-outage fallback remain unproved. Two independent builds and artifact comparison are useful follow-up evidence; do not claim reproducible builds until that comparison passes.
 
 ## Boundaries and references
 

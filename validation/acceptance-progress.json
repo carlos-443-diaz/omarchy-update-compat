@@ -137,6 +137,74 @@
       "credential_file_deleted": true,
       "raw_upgrade_log_sha256": "79de91b81e76712e785a06ed4f47cf607f3eb73b0210e2482c5ca454849f216a",
       "privacy": "Raw workstation transcript and doctors retained privately; public evidence contains selected indicators, software versions and health results only. No credentials, enrollment, camera material or user paths."
+    },
+    "physical_lock": {
+      "date": "2026-11-21",
+      "result": "passed",
+      "architecture": "x86_64",
+      "versions": {
+        "omarchy": "4.5.0-3",
+        "opencv": "5.0.0-13",
+        "gaze-bin": "0.5.2-1.1",
+        "gaze-gui-bin": "0.5.2-1.1",
+        "gaze-omarchy-bin": "0.5.2-1.1",
+        "omarchy-update-compat": "0.2.0-1"
+      },
+      "tests": {
+        "face": {
+          "result": "passed",
+          "lock_command": "omarchy system lock",
+          "lock_command_exit": 0,
+          "ipc_locked_after_request": true,
+          "ipc_secure_initial_sample": true,
+          "compositor_secure_event_observed": true,
+          "ipc_unlocked_after_authentication": true,
+          "method_evidence": "User confirmation; the public IPC reports lock state but does not retain the authentication method.",
+          "user_confirmation": "Face recognized + Enter unlocked",
+          "lock_events": [
+            "lock-requested",
+            "session-locked=true",
+            "secure=true",
+            "face-started",
+            "secure=false",
+            "session-locked=false",
+            "session-locked=false",
+            "unlocked"
+          ]
+        },
+        "password": {
+          "result": "passed",
+          "lock_command": "omarchy system lock",
+          "lock_command_exit": 0,
+          "ipc_locked_after_request": true,
+          "ipc_secure_initial_sample": false,
+          "compositor_secure_event_observed": true,
+          "ipc_unlocked_after_authentication": true,
+          "method_evidence": "User confirmation; the public IPC reports lock state but does not retain the authentication method.",
+          "user_confirmation": "After Escape cancelled face authentication, normal password unlocked the desktop",
+          "lock_events": [
+            "lock-requested",
+            "session-locked=true",
+            "secure=true",
+            "secure=false",
+            "session-locked=false",
+            "session-locked=false",
+            "unlocked"
+          ],
+          "scope": "Face authentication cancelled with Escape; normal password unlocked the session. Daemon-outage fallback was not exercised."
+        }
+      },
+      "post_test": {
+        "desktop_unlocked": true,
+        "gaze_doctor_healthy": true,
+        "gaze_omarchy_integration_ready": true,
+        "daemon_active": true
+      },
+      "limits": [
+        "Current deployed Gaze/OS combination only; not a future cross-ABI authentication test.",
+        "Reboot/recovery, daemon-outage fallback, native aarch64, and coordinator ABI-cohort upgrades were not exercised."
+      ],
+      "privacy": "No password, camera frames, enrollment material, account identifiers or workstation paths were captured in this public record."
     }
   },
   "revision_scope": "The cold VM used an earlier 0.2.0 snapshot. Subsequent changes added installed-cache-independent KEEP, private transaction configuration, and an image/target verification gate. These passed focused tests. The source commit, container recipe, compiler entrypoint, ORT backport and process supervisor used by the successful cold compile are unchanged; the final environment/gate was exercised separately. Further focused privacy/input checks reject authenticated build-mirror URLs before spawning commands, protect per-run directories, and reject invalid policy types. Compiler recipes and execution arguments remain unchanged.",
@@ -145,11 +213,11 @@
     "One host environment probe ended with SIGKILL; its cause was not established. With no VM running, the same bounded preparation and final target gate subsequently passed. No native host package transaction occurred during either probe."
   ],
   "pending": [
-    "locked-desktop authentication and password fallback",
     "reboot/snapshot recovery rehearsal",
     "coordinator self-upgrade and pacman/libalpm ABI-cohort acceptance",
     "native aarch64 source/runtime validation; backend remains explicitly unsupported",
-    "general native-repository provider precedence; present adapter uses reviewed publisher artifacts"
+    "general native-repository provider precedence; present adapter uses reviewed publisher artifacts",
+    "password fallback during face-daemon outage; current physical check covered face cancellation"
   ],
   "publication": {
     "upstream_pr": "https://github.com/omacom/omarchy/pull/19665",
@@ -165,7 +233,8 @@
     "build-environment.json",
     "build-environment.log",
     "local-automation.json",
-    "local-automation.log"
+    "local-automation.log",
+    "physical-lock.json"
   ],
   "prepared_native_component_sha256": "01b367d0433ccfbce057e8d43f7bff1a1052a8da3e3efd3da645f1216ad3b427"
 }
