@@ -1,3 +1,3 @@
 Compatibility plan: ready
   gaze: cached-source — A previous local build still satisfies the target transaction; no rebuild is needed.
-Plan: /home/c01000100/.local/state/omarchy/update-compat/runs/20261121T140111-120e2ebe/plan.json
+Plan: $HOME/.local/state/omarchy/update-compat/runs/20261121T140111-120e2ebe/plan.json
