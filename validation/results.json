@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-21",
+  "tests_passed": 28,
+  "actual_source_build": {
+    "application": "gaze",
+    "version": "0.5.2",
+    "architecture": "x86_64",
+    "opencv_abi": "5.0"
+  },
+  "installed_poc_plan": {
+    "status": "ready",
+    "action": "cached-source",
+    "target": {
+      "architecture": "x86_64",
+      "repositories": {
+        "omarchy": "91dc7cbc7ba2d76ecaa197fb18de423cda8df3527418f7505bb033d83ae57dda",
+        "core": "7015ab8595669a6c1e4e2fb6de64e0043c8eb99bb41be368417254078dabcd1e",
+        "extra": "6fe33bbb22b7e0eaef48ccc35b5896ee6612675b462373880b27cf58311b0a53",
+        "multilib": "51ad7d4b67c146fb5865f9e95f91cd64dfa8b0710ec3cf67bd4ba730e1f5a162"
+      },
+      "repository_order": [
+        "omarchy",
+        "core",
+        "extra",
+        "multilib"
+      ],
+      "servers": {
+        "omarchy": [
+          "https://pkgs.omarchy.org/stable/x86_64"
+        ],
+        "core": [
+          "https://stable-mirror.omarchy.org/core/os/x86_64"
+        ],
+        "extra": [
+          "https://stable-mirror.omarchy.org/extra/os/x86_64"
+        ],
+        "multilib": [
+          "https://stable-mirror.omarchy.org/multilib/os/x86_64"
+        ]
+      },
+      "ignore": [],
+      "ignore_groups": []
+    },
+    "bundle_verified": true
+  },
+  "container_native_commit": "passed",
+  "physical_authentication": "not tested",
+  "native_arm_build": "not tested",
+  "host_package_transaction": "none",
+  "host_installed_versions": [
+    "gaze-bin 0.3.7-1",
+    "gaze-gui-bin 0.3.7-1",
+    "gaze-omarchy-bin 0.3.7-1",
+    "opencv 5.0.0-13",
+    "omarchy 4.5.0-3"
+  ],
+  "omarchy_patch_base": "52db1dda432fc8f71f41ad14d2bbf9002cf0beb7",
+  "logs": {
+    "tests.log": "680eb97625468aa9a412452ebfcb425b8ac9431ebe7269e29b8ee249847fbf63",
+    "container-smoke.log": "98bf311653c52f9234765891ef77b418722bf3e03199daf0d7fd2afae6a793ce",
+    "omarchy-pacman.log": "9452cbfedbd29287c028e9866c6e62ec82d01fa72e2a7b09ff7018eb269683f6",
+    "omarchy-sequence.log": "993308714b7e137e0e6b42a003723c244fe1ce46dfae5714715a3d5d8b96f664",
+    "omarchy-hooks.log": "f3df5c80f0189f2c230f923138739b6b476bcb31534e6f95054215cfc5ee68f6",
+    "installed-plan.log": "74391ac514bf2c9baf388d968f3a41e4d9b28b4d4343d17f557c7400885218e1",
+    "live-commit-guard.log": "304a07b22670e40f63171337eb6caa3756a021dc9da09847fc5c7f88de28e97f"
+  }
+}

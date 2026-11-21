@@ -1,0 +1,3 @@
+ok - helper composes the guarded pacman invocation
+ok - helper forwards LC_ALL to the transaction
+ok - rejected compatibility bundle stops before pacman or sudo

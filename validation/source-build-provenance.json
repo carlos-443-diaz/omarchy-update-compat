@@ -1,0 +1,28 @@
+{
+  "source_commit": "459386686e83807fb3520dfc0ad77b77c8ccb647",
+  "target": "d75247bd39e17f6b50384b165015da444414924becb6fa4a533ade4cf7eb0fa8",
+  "builder_recipe": "2b94a5dccc4b84350b745d399223f1a660532ae9f66c693a433836dc87f8b5a3",
+  "build_backports": [
+    {
+      "path": "scripts/fetch-ort.sh",
+      "sha256": "b40cae01d3edfe48e09eca7b55737ddc7fc6e6e2af02255166b5b4ede809a825",
+      "upstream_commit": "d380b9b5dde195d22a8c9ad278b874b87ddac77f"
+    }
+  ],
+  "image": "cd9a2a9a3abc2f39f8f53fd701d937cb49210e7ed0b56235512ecd0e271f3e23",
+  "cache_hit": false,
+  "archives": [
+    {
+      "filename": "gaze-0.5.2-1-x86_64.pkg.tar.zst",
+      "sha256": "f6323e9209f98c6e6a77984a08a9b074133d105acc3cffc50d55141d0c536324"
+    },
+    {
+      "filename": "gaze-gui-0.5.2-1-x86_64.pkg.tar.zst",
+      "sha256": "cda085e047484ea71940d4e171db7fe02e57a6f5d0864b33b2743fb7b1456382"
+    },
+    {
+      "filename": "gaze-omarchy-0.5.2-1-x86_64.pkg.tar.zst",
+      "sha256": "d5aa4e4ed2c8eda35a6a12c5710da1cd66218a8bb8d2c6478fa02e0c8504d3bb"
+    }
+  ]
+}

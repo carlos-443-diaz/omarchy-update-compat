@@ -1,0 +1,43 @@
+test_build_failure_leaves_installed_state_unchanged (test_compat.CoordinatorTests.test_build_failure_leaves_installed_state_unchanged) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmpibvxkao6/state/runs/20261121T135950-14513078/source-build.log
+ok
+test_bundle_rejects_changed_installed_state (test_compat.CoordinatorTests.test_bundle_rejects_changed_installed_state) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmpww5o6eqb/state/runs/20261121T135950-e779b135/source-build.log
+ok
+test_bundle_rejects_changed_pins (test_compat.CoordinatorTests.test_bundle_rejects_changed_pins) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmpglr5fj6s/state/runs/20261121T135950-3558f084/source-build.log
+ok
+test_bundle_rejects_changed_target_metadata (test_compat.CoordinatorTests.test_bundle_rejects_changed_target_metadata) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmpsagxki4_/state/runs/20261121T135951-a5f23af9/source-build.log
+ok
+test_bundle_rejects_modified_staged_archive (test_compat.CoordinatorTests.test_bundle_rejects_modified_staged_archive) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmpa8jeo15r/state/runs/20261121T135951-f1b9d584/source-build.log
+ok
+test_bundle_verifies_against_unchanged_native_state (test_compat.CoordinatorTests.test_bundle_verifies_against_unchanged_native_state) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmpszzyuurq/state/runs/20261121T135952-4d208647/source-build.log
+ok
+test_compatible_cached_build_survives_unrelated_snapshot_change (test_compat.CoordinatorTests.test_compatible_cached_build_survives_unrelated_snapshot_change) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmpduhiqf4l/state/runs/20261121T135952-d52aad6b/source-build.log
+ok
+test_compatible_upstream_avoids_build (test_compat.CoordinatorTests.test_compatible_upstream_avoids_build) ... ok
+test_corrupt_cached_artifact_is_not_reused (test_compat.CoordinatorTests.test_corrupt_cached_artifact_is_not_reused) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmpv_1434k_/state/runs/20261121T135953-4ab92a91/source-build.log
+ok
+test_live_commit_bridge_is_disabled (test_compat.CoordinatorTests.test_live_commit_bridge_is_disabled) ... ok
+test_managed_package_pin_blocks_explicit_replacement (test_compat.CoordinatorTests.test_managed_package_pin_blocks_explicit_replacement) ... ok
+test_plan_requests_build_without_executing_builder (test_compat.CoordinatorTests.test_plan_requests_build_without_executing_builder) ... ok
+test_refreshed_target_can_be_newer_than_host_sync_cache (test_compat.CoordinatorTests.test_refreshed_target_can_be_newer_than_host_sync_cache) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmpt93nhze3/state/runs/20261121T135954-06b02afe/source-build.log
+ok
+test_stage_builds_once_then_reuses_valid_local_candidate (test_compat.CoordinatorTests.test_stage_builds_once_then_reuses_valid_local_candidate) ... Building Gaze 0.5.2 for the target snapshot; log: /tmp/tmp_jx2tzrc/state/runs/20261121T135954-5ee803ea/source-build.log
+ok
+test_tracking_does_not_install_an_absent_application (test_compat.CoordinatorTests.test_tracking_does_not_install_an_absent_application) ... ok
+test_unmanaged_blocker_is_not_silently_repaired (test_compat.CoordinatorTests.test_unmanaged_blocker_is_not_silently_repaired) ... ok
+test_upstream_handoff_is_reported (test_compat.CoordinatorTests.test_upstream_handoff_is_reported) ... ok
+test_upstream_only_blocks_without_build (test_compat.CoordinatorTests.test_upstream_only_blocks_without_build) ... ok
+test_explicit_handoff_accepts_lower_packaging_revision (test_compat.NativeTests.test_explicit_handoff_accepts_lower_packaging_revision) ... ok
+test_library_upgrade_alone_is_rejected (test_compat.NativeTests.test_library_upgrade_alone_is_rejected) ... ok
+test_local_source_fits_old_abi (test_compat.NativeTests.test_local_source_fits_old_abi) ... ok
+test_native_preparation_does_not_change_local_database (test_compat.NativeTests.test_native_preparation_does_not_change_local_database) ... ok
+test_native_wrapper_preserves_installer_and_bounds (test_compat.NativeTests.test_native_wrapper_preserves_installer_and_bounds) ... ok
+test_publisher_and_library_upgrade_prepare_together (test_compat.NativeTests.test_publisher_and_library_upgrade_prepare_together) ... ok
+test_publisher_rejected_on_old_abi (test_compat.NativeTests.test_publisher_rejected_on_old_abi) ... ok
+test_failure_discovery_is_only_a_suggestion (test_compat.PolicyTests.test_failure_discovery_is_only_a_suggestion) ... ok
+test_source_policy_keeps_source_even_when_publisher_fits (test_compat.PolicyTests.test_source_policy_keeps_source_even_when_publisher_fits) ... ok
+test_unknown_adapter_is_rejected (test_compat.PolicyTests.test_unknown_adapter_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 8.884s
+
+OK

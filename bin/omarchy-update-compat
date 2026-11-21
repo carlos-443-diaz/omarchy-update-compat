@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 Carlos Diaz
+# SPDX-License-Identifier: GPL-3.0-or-later
+import pathlib
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+from omarchy_compat.cli import main
+
+raise SystemExit(main())

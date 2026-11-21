@@ -1,0 +1,8 @@
+ok - an update where every step works runs all of them, in order
+ok - an unattended update approves orphan removal
+ok - a finished update clears the shell update indicator without rechecking
+ok - -y is what marks an update unattended, not the update itself
+ok - a confirmed update approves orphan removal
+ok - an update restarts the shell before migrating only when migrations are pending
+ok - a blocked package upgrade stops the update before it migrates
+ok - a mise failure still finishes the update, offers a reboot and explains how to retry

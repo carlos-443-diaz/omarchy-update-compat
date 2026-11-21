@@ -1,0 +1,9 @@
+ok - update -y authorizes once for everything, AUR included
+ok - update  authorizes once for everything, AUR included
+ok - update stops after omarchy-update-system-pkgs fails and releases the sleep inhibitor
+ok - update stops after yay fails and releases the sleep inhibitor
+ok - update stops after omarchy-hook fails and releases the sleep inhibitor
+ok - update stops on TERM and releases the sleep inhibitor
+ok - refresh runs the hook between the config re-sync and the transaction
+ok - refresh propagates pacman failure
+ok - refresh propagates omarchy-hook failure

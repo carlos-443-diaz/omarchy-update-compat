@@ -1,0 +1,3 @@
+# Unified diff context and captured terminal output contain intentional spaces.
+integration/*.patch -whitespace
+validation/*.log -whitespace
