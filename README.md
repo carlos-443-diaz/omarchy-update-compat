@@ -1,94 +1,85 @@
 # Omarchy update compatibility POC
 
-An opt-in coordinator for a tracked application's compatibility across an Arch/Omarchy package update. Configuration is deliberately small:
+An opt-in coordinator for an installed application's compatibility across an Arch/Omarchy update. Pacman/libalpm still resolves and commits the system transaction. The coordinator selects a reviewed published package, reuses a compatible local build, or builds the approved source against the selected system repositories.
 
 ```toml
 [applications]
 gaze = "prefer-upstream"
 ```
 
-The reproduced edge case, recommended native integration boundary and validation are submitted upstream in [omacom/omarchy#19665](https://github.com/omacom/omarchy/pull/19665). The application build change is [GunduLabs/gaze#1027](https://github.com/GunduLabs/gaze/pull/1027).
+The reproduced Gaze/OpenCV edge case is [omacom/omarchy#19665](https://github.com/omacom/omarchy/pull/19665). The application build contribution is [GunduLabs/gaze#1027](https://github.com/GunduLabs/gaze/pull/1027). See [ACCEPTANCE.md](ACCEPTANCE.md) for the release checks and their limits.
 
-The coordinator prepares the complete target transaction with **libalpm**, using a private copy of pacman's databases. It selects compatible Gaze publisher packages first, a previously built compatible source package second, and a fresh source build when necessary. A compatible publisher package replaces a local source build on a subsequent request, including when the publisher's packaging revision is lower. Nothing is installed on the host by the planning or staging commands.
+## Install and use
 
-## Local use
-
-Requirements: Arch Linux, Python 3.14 (including zstd tar support), pacman/libalpm headers, a C compiler, makepkg, repo-add, fakeroot, Git, and rootless Podman for source builds. The POC uses the active pacman repository configuration; it does not switch OS channels or guess a target from an Omarchy version string.
-
-Install the unprivileged tool and optionally import a successful build cache:
+Build and install the optional native component, then opt into the reviewed Gaze adapter:
 
 ```bash
-python scripts/install-local.py --cache-from .cache
+python scripts/build-package.py
+sudo pacman -U build/package/omarchy-update-compat-0.2.0-1-x86_64.pkg.tar.zst
 omarchy-update-compat track gaze
+omarchy-update-compat upgrade
+```
+
+The upgrade command runs the installed stock Omarchy updater, retaining its confirmation, authentication, snapshot, package guard, systemd scope, migrations and boot checks. The packaged wrappers insert compatibility preparation before the main package transaction; they do not edit installed Omarchy scripts. The proposed native Omarchy integration calls the same contract directly. No background service, permanent repository, permanent IgnorePkg entry or passwordless sudo rule is installed.
+
+The old experimental unprivileged installer in `scripts/install-local.py` installs a planning-only snapshot. If previously used, remove its task-owned `~/.local/bin/omarchy-update-compat` symlink after installing the native component so it cannot shadow `/usr/bin/omarchy-update-compat`.
+
+Requirements are Arch Linux, Python 3.14, pacman/libalpm, Git, fakeroot and sudo. Native component construction needs makepkg and a C compiler. Source builds additionally need rootless Podman with delegated cgroup v2 controllers and at least 15 GiB free disk space. The reviewed Gaze provider currently supports **native x86_64 only**; aarch64 stops explicitly rather than guessing a binary or cross-build recipe.
+
+Tracking writes `~/.config/omarchy/update-compat.toml`. State is under `~/.local/state/omarchy/update-compat`, and cache under `~/.cache/omarchy/update-compat`. Removing Gaze from the tracking file disables its management; it leaves the installed package group intact. Retained diagnostic runs and builder images can be removed explicitly when no update is running; the tool never performs a broad container-engine prune.
+
+## What the user sees
+
+```text
+Gaze  CHECKING   Installed 0.3.7-1; checking the target system.
+Gaze  PLAN       Publisher binaries do not fit this snapshot; an approved source recipe is available.
+Gaze  BUILDING   Compiling 0.5.2 for this system. Detailed output is saved in the run log.
+Gaze  READY      Compatible package group selected and checked.
+Gaze  INSTALLING With the system update...
+Gaze  DONE       Installed 0.5.2 — local build.
+```
+
+A later request reports `KEEP` when the selected build is already installed. It does not rebuild or reinstall it. A compatible reviewed publisher package takes precedence on the next request, including a lower packaging revision of the same application version. `BLOCKED` explains preparation failure; it does not report a successful installation. The installed package identities/dependencies are checked before `DONE`.
+
+There is no additional routine build-confirmation question after tracking. Existing Omarchy confirmation and sudo authentication remain. An unknown application, new unreviewed release, invalid recipe, missing resource control, pin, or unresolved conflict stops preparation. It never turns a failed update log into executable code.
+
+## Policy and inspection
+
+Policies are `prefer-upstream`, `source` (prefer an approved source build even when the publisher fits), and `upstream-only` (stop rather than build). The current adapter manages the already-installed `gaze-bin`, `gaze-gui-bin` and `gaze-omarchy-bin` group together; tracking does not authorize introducing an absent application. Existing IgnorePkg/IgnoreGroup settings are respected. A newer manually installed application is not silently downgraded to an older reviewed release.
+
+```bash
 omarchy-update-compat plan --refresh
 omarchy-update-compat stage --refresh
 omarchy-update-compat status
-```
-
-`track` creates `~/.config/omarchy/update-compat.toml`. The installed command is in `~/.local/bin`, its code in `~/.local/lib/omarchy-compat-poc`, state in `~/.local/state/omarchy/update-compat`, and build cache in `~/.cache/omarchy/update-compat`. Re-running the installer without `--cache-from` updates the tool. It refuses to overwrite an unrelated command or installation directory. It does not alter Omarchy's installed commands, configure a background job, or edit `/etc/pacman.conf`.
-
-Before installation, run the same commands using `bin/omarchy-update-compat --config examples/compat.toml --state-dir .state --cache-dir .cache ...`. Global arguments precede the subcommand. `--offline` uses cached, checksum-verified publisher assets; `--refresh` still contacts the configured pacman repositories. Without `--refresh`, planning uses the host's existing sync metadata.
-
-To inspect a failed update transcript:
-
-```bash
 omarchy-update-compat discover /tmp/omarchy-update.log
 ```
 
-Discovery suggests a known adapter and a tracking command. It never executes log content, downloads a recipe from a log, or automatically approves a newly discovered application.
+Planning and staging do not change host packages. They copy the native database, optionally refresh that private copy, and prepare the complete target transaction with libalpm. Unrelated dependency failures remain blockers. A successful stage saves a restricted candidate manifest and hashes. Global arguments precede the subcommand; `--offline` uses cached publisher archives but does not disable the explicit metadata refresh or a required source/dependency fetch. Exit codes are 0 (ready), 10 (build required), 20 (blocked plan), 2 (operational failure), and 130 (interrupted request).
 
-Policies are `prefer-upstream`, `source` (select source even when publisher packages fit), and `upstream-only` (stop rather than build). Only the reviewed Gaze adapter is supported. Tracking an absent application does not install it. This POC manages the already-installed `gaze-bin`, `gaze-gui-bin`, and `gaze-omarchy-bin` group together. A managed package pinned through IgnorePkg or IgnoreGroup stops planning before selecting an explicit replacement.
+## Trust and bounded execution
 
-## What runs
+The root-owned [reviewed catalog](policies/gaze.json) pins the Gaze release, source commit, Cargo.lock, publisher archive checksums and build recipes. It does not approve whatever a mutable latest-release API returns. A new release requires a reviewed component/catalog update; a compatible publisher artifact already in the catalog is selected automatically. Here “published” means GunduLabs' release wrapped under the installed AUR package identities. It does not mean an Arch official package. A general native-repository/AUR provider is a further contribution path.
 
-1. Read the active repository order, servers, architecture, ignored packages/groups, installed package inventory and sync database hashes. Refresh only a private database when requested, using the checkupdates/fakeroot technique.
-2. Ask libalpm to prepare the complete system upgrade. Test publisher packages against that same transaction, preserving their OpenCV ABI bounds. Unrelated dependency blockers stop the plan.
-3. If required, build the selected Gaze release in a rootless Arch container against the target's Arch mirror. The current source builder supports **x86_64 only**; aarch64 source building stops with an explicit unsupported-backend error.
-4. Use makepkg to retain the installed AUR `*-bin` package identities, original payload, install script, backup declarations and ABI bounds. Source builds receive a local packaging revision and a provenance marker. This avoids the unrelated AUR package named `gaze`.
-5. Re-prepare all selected candidates together with libalpm. Stage archives and a temporary repository using repo-add, and save a transaction manifest, hashes and build provenance. Reuse a checksum-valid cached build if libalpm still accepts it, including after an unrelated repository revision.
+Source builds use a pinned Arch image, signed target-repository toolchain packages, pinned nfpm and ONNX Runtime artifacts, and `cargo --locked`. Gaze 0.5.2 needs the recorded upstream ONNX Runtime download backport because its original tarball endpoint is unavailable. A fresh tracked source archive avoids ignored or modified checkout files. Dependency fetching runs separately; compilation has no network. No workstation home, credentials, devices or engine socket are mounted into the builder, and input mounts are read-only.
 
-Here, “upstream” means **GunduLabs' published Gaze release**, verified against the digests in GitHub's release metadata. These are wrapped into the existing AUR package identities. They are not Arch official repository packages, and the wrapper is a locally produced package. A general repository/AUR provider backend is a later contribution path.
+The overall build has a 30-minute budget. Build containers enforce 4 GiB memory, two CPUs, 512 PIDs, a 4 GiB workspace and 512 MiB temporary filesystem. They drop capabilities, deny privilege acquisition, use a read-only root filesystem, and verify the cgroup limits at entry. Container lifetime is also capped independently of the coordinator. Output archives are bounded to 256 MiB, dependency archives to 1 GiB, and the combined build log to 8 MiB. Cancellation stops owned child processes and named build containers; failure does not retry indefinitely. These build deadlines do not kill native pacman during a host commit.
 
-The source build for Gaze 0.5.2 needs one explicit build-only backport: its original ONNX Runtime tarball URL returns 404. The adapter copies the already-reviewed upstream NuGet download script, records its SHA-256 and upstream commit, and rejects other tracked checkout modifications. It records the exact source commit, builder recipe, container image ID and package hashes. This is provenance, not a claim of byte-for-byte reproducible builds.
+The finite signed-package environment preparation uses the same CPU/memory bounds and command deadlines, with a larger 4096-process `nproc` ceiling: that limit counts the whole real UID and is not a per-container PID limit. A 512-process ceiling there exhausted GPG verification resources during testing; signature enforcement correctly stopped that attempt. Dependency and compilation jobs use their separate verified cgroup PID limit.
 
-## Transaction boundary
+The installed isolated-Python privileged helper accepts only the tracked Gaze group and the existing full-upgrade flags. It rejects arbitrary configuration, root/database overrides, dependency bypasses, symlinks and inputs writable by other users. It copies archives into protected root-owned storage before checking identities, hashes, architecture and current approval. It refreshes and prepares again, then a native pretransaction hook rechecks installed state, policy and the target repositories while pacman holds its transaction lock. Regular repository signature policy remains intact; unsigned locally built artifacts are accepted only in the temporary local repository for that approved transaction.
 
-Exit codes are 0 (ready), 10 (source build required), 20 (blocked), and 2 (operational failure). `stage --json` prints a machine-readable plan, with build progress on stderr. A failed run saves a failure record rather than leaving the previous successful plan as the latest status.
+The local administrator and their container engine remain trusted. Provenance is a diagnostic record, not a signed attestation or a security certification. Artifact hashes do not prove the absence of vulnerabilities. Tests and advisory review support the claim only for the revisions and environments recorded.
 
-`verify PATH/transaction.json` checks package identities/hashes, repository configuration and metadata, installed package state, then prepares the candidates again with libalpm. For a refreshed plan, verification refreshes another private database and compares it to the staged target. This permits a legitimate target newer than the host's sync cache without changing that cache. A changed target stops the handoff and requires replanning. Plans made without refresh are verified against the host's cached metadata.
+The compiled native helper depends on pacman/libalpm's ABI. Production distribution needs a maintained coordinator package rebuilt alongside that native library, as other Arch packages are. The local POC does not promise to rebuild its own helper across a future library ABI change; the matching native package and self-upgrade acceptance are part of the packaging contribution path.
 
-`transaction-args` exposes an experimental NUL-delimited argument contract for Omarchy's existing pacman helper. **It refuses to run outside a container.** The container bridge creates a transient local repository with local unsigned-package policy scoped to that repository and its temporary configuration. It never writes a permanent source or IgnorePkg entry. Pacman still performs its normal signature, dependency, file-conflict and transaction checks.
-
-Dependency preparation does not validate physical authentication, camera operation, the live graphical lock, bootability, arbitrary pacman configuration directives or all file conflicts. Native pacman remains responsible for the actual commit. Live integration requires a reviewed root-owned artifact-import/signing boundary, target metadata reconciliation under the package transaction lock, and Omarchy VM acceptance coverage; see [CONTRIBUTING-PLAN.md](CONTRIBUTING-PLAN.md).
-
-## Verification
+## Evidence and remaining acceptance
 
 ```bash
 python -m unittest discover -s tests -v >test-results.log 2>&1
 ```
 
-The tests use real libalpm preparation and real native package archives; network and source builds are substituted in coordinator tests. They cover incompatible publisher binaries, a matching local build, joint library/application upgrades, a lower-revision upstream handoff, one build followed by cache reuse, unrelated blockers, changed metadata/pins/installed state, archive tampering, build failure and discovery behavior. The native makepkg wrapper test runs as an unprivileged user.
+Tests use real native archives and libalpm preparation; provider network/build work is substituted in unit tests. Root import tests run in a disposable container. [tests/container-handoff.py](tests/container-handoff.py) performs an actual native transaction using small ABI fixtures, including target-drift rejection before commit and a joint library upgrade/publisher handoff. [tests/vm-automatic-upgrade.sh](tests/vm-automatic-upgrade.sh) exercises the uncached build/deploy/repeat path in a disposable official image. Neither substitutes for physical camera, TPM, locked-desktop, password fallback or boot recovery acceptance.
 
-The recorded local POC also built the actual Gaze 0.5.2 source release for OpenCV 5.0, staged the three matching `*-bin` packages, reused them on a later request, and committed them through the patched Omarchy pacman helper in a disposable rootless Podman container. The smoke script is [tests/container-smoke.sh](tests/container-smoke.sh). It bootstraps a managed Gaze installation, stages a second transaction, commits it, checks pacman's database, resolves runtime/PAM symbols, invokes CLI help/version and the daemon's invalid-option path, and verifies the service unit.
+Historical evidence is retained in [validation/results.json](validation/results.json) and [validation/host-upgrade.json](validation/host-upgrade.json). The workstation's Gaze 0.3.7 to source-built 0.5.2 deployment was successful, its stock Omarchy update completed, both Gaze doctors passed, and camera verification succeeded with enrollment and TPM encryption retained. Omarchy was already the latest stable 4.5.0-3, with OpenCV 5.0.0-13. That deployment was manual.
 
-The [validation record](validation/results.json) includes the 28 passing tests, captured smoke and focused Omarchy test logs, exact source build provenance and unchanged host package versions.
-
-This is a package transaction smoke test, not a complete Omarchy OS upgrade or a physical authentication test. It leaves the host's installed packages and authentication configuration unchanged.
-
-### Follow-up deployment on 2026-11-21
-
-The [host deployment record](validation/host-upgrade.json) captures the subsequent live outcome: Gaze was upgraded from 0.3.7 to the source-built 0.5.2 package group, the installed stock Omarchy updater completed successfully, both Gaze doctors reported healthy/ready, and a camera face-verification test passed. Existing enrollment was retained and migrated to owner-bound TPM encryption. The new package defaults were merged while preserving existing settings. Omarchy remained 4.5.0-3, already the latest stable package; OpenCV remained 5.0.0-13.
-
-This deployment used explicit checksum verification, root-owned artifact copies, native `pacman -U`, then the unchanged installed Omarchy updater. The host and target snapshot had the same ABI, so this is evidence for the actual Gaze upgrade path rather than a general automatic cross-ABI commit implementation. The experimental host bridge remains disabled.
-
-The [official-VM upgrade smoke](validation/vm-upgrade.log) completed the stock updater with the built Gaze packages installed and its daemon running. That empty VM has no TPM; its fixture disables template encryption, while the live workstation keeps it enabled. The [full Omarchy test suite](validation/omarchy-full-vm.log) completed 435 test files without failures in a separate official VM; six files had skipped checks. The running and installed host kernels match; a stale reboot marker from before the current boot was cleared.
-
-## Omarchy integration draft
-
-[integration/omarchy-update.patch](integration/omarchy-update.patch) targets the commit in [integration/omarchy-base.txt](integration/omarchy-base.txt). It is a reviewable draft, not applied to the installed updater:
-
-- An explicit `OMARCHY_COMPAT_POC=1` runs staging after keyrings and before the system package transaction.
-- The existing `omarchy-update-pacman` helper imports the bundle's temporary repository and explicit managed targets, preserving Omarchy's sudo environment and systemd scope protection. Failed preparation stops before escalation.
-- The later AUR pass excludes only this update's managed targets, preventing an incompatible binary from immediately replacing the chosen build. The next plan can return to upstream automatically.
-
-The existing snapshot, migration, restart and boot-verification flow remains the owner of the update. Automatic coordinator activation on hosts remains a separate production contribution.
+The separate [acceptance record](validation/acceptance-progress.json) records the later automatic cold-build/deployment/repeat VM proof, focused tests, native transaction guards, RustSec review and full Omarchy regressions. It identifies the tested snapshots and subsequent focused checks rather than claiming every test exercised every revision. Native aarch64, locked-desktop authentication, boot recovery and coordinator ABI/self-upgrade acceptance remain unclaimed.

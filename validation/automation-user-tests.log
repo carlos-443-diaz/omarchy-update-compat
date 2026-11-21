@@ -1,0 +1,61 @@
+test_build_failure_leaves_installed_state_unchanged (test_compat.CoordinatorTests.test_build_failure_leaves_installed_state_unchanged) ... ok
+test_bundle_rejects_changed_installed_state (test_compat.CoordinatorTests.test_bundle_rejects_changed_installed_state) ... ok
+test_bundle_rejects_changed_pins (test_compat.CoordinatorTests.test_bundle_rejects_changed_pins) ... ok
+test_bundle_rejects_changed_target_metadata (test_compat.CoordinatorTests.test_bundle_rejects_changed_target_metadata) ... ok
+test_bundle_rejects_modified_staged_archive (test_compat.CoordinatorTests.test_bundle_rejects_modified_staged_archive) ... ok
+test_bundle_verifies_against_unchanged_native_state (test_compat.CoordinatorTests.test_bundle_verifies_against_unchanged_native_state) ... ok
+test_compatible_cached_build_survives_unrelated_snapshot_change (test_compat.CoordinatorTests.test_compatible_cached_build_survives_unrelated_snapshot_change) ... ok
+test_compatible_upstream_avoids_build (test_compat.CoordinatorTests.test_compatible_upstream_avoids_build) ... ok
+test_corrupt_cached_artifact_is_not_reused (test_compat.CoordinatorTests.test_corrupt_cached_artifact_is_not_reused) ... ok
+test_live_commit_bridge_is_disabled (test_compat.CoordinatorTests.test_live_commit_bridge_is_disabled) ... ok
+test_managed_package_pin_blocks_explicit_replacement (test_compat.CoordinatorTests.test_managed_package_pin_blocks_explicit_replacement) ... ok
+test_plan_requests_build_without_executing_builder (test_compat.CoordinatorTests.test_plan_requests_build_without_executing_builder) ... ok
+test_refreshed_target_can_be_newer_than_host_sync_cache (test_compat.CoordinatorTests.test_refreshed_target_can_be_newer_than_host_sync_cache) ... ok
+test_stage_builds_once_then_reuses_valid_local_candidate (test_compat.CoordinatorTests.test_stage_builds_once_then_reuses_valid_local_candidate) ... ok
+test_tracking_does_not_install_an_absent_application (test_compat.CoordinatorTests.test_tracking_does_not_install_an_absent_application) ... ok
+test_unmanaged_blocker_is_not_silently_repaired (test_compat.CoordinatorTests.test_unmanaged_blocker_is_not_silently_repaired) ... ok
+test_upstream_handoff_is_reported (test_compat.CoordinatorTests.test_upstream_handoff_is_reported) ... ok
+test_upstream_only_blocks_without_build (test_compat.CoordinatorTests.test_upstream_only_blocks_without_build) ... ok
+test_explicit_handoff_accepts_lower_packaging_revision (test_compat.NativeTests.test_explicit_handoff_accepts_lower_packaging_revision) ... ok
+test_library_upgrade_alone_is_rejected (test_compat.NativeTests.test_library_upgrade_alone_is_rejected) ... ok
+test_local_source_fits_old_abi (test_compat.NativeTests.test_local_source_fits_old_abi) ... ok
+test_native_preparation_does_not_change_local_database (test_compat.NativeTests.test_native_preparation_does_not_change_local_database) ... ok
+test_native_wrapper_preserves_installer_and_bounds (test_compat.NativeTests.test_native_wrapper_preserves_installer_and_bounds) ... ok
+test_publisher_and_library_upgrade_prepare_together (test_compat.NativeTests.test_publisher_and_library_upgrade_prepare_together) ... ok
+test_publisher_rejected_on_old_abi (test_compat.NativeTests.test_publisher_rejected_on_old_abi) ... ok
+test_failure_discovery_is_only_a_suggestion (test_compat.PolicyTests.test_failure_discovery_is_only_a_suggestion) ... ok
+test_source_policy_keeps_source_even_when_publisher_fits (test_compat.PolicyTests.test_source_policy_keeps_source_even_when_publisher_fits) ... ok
+test_unknown_adapter_is_rejected (test_compat.PolicyTests.test_unknown_adapter_is_rejected) ... ok
+test_only_native_full_upgrade_flags_are_accepted (test_deployment.BoundaryTests.test_only_native_full_upgrade_flags_are_accepted) ... ok
+test_owned_input_is_bounded (test_deployment.BoundaryTests.test_owned_input_is_bounded) ... ok
+test_owned_input_rejects_links_and_other_writers (test_deployment.BoundaryTests.test_owned_input_rejects_links_and_other_writers) ... ok
+test_concurrent_run_is_rejected_then_retry_succeeds (test_deployment.DeploymentTests.test_concurrent_run_is_rejected_then_retry_succeeds) ... ok
+test_done_requires_the_selected_packages_to_be_installed (test_deployment.DeploymentTests.test_done_requires_the_selected_packages_to_be_installed) ... ok
+test_failed_build_never_reports_ready (test_deployment.DeploymentTests.test_failed_build_never_reports_ready) ... ok
+test_native_package_lock_prevents_building_and_retry_succeeds (test_deployment.DeploymentTests.test_native_package_lock_prevents_building_and_retry_succeeds) ... ok
+test_repeated_upgrade_keeps_installed_group_without_reinstall (test_deployment.DeploymentTests.test_repeated_upgrade_keeps_installed_group_without_reinstall) ... ok
+test_working_installed_build_survives_source_cache_removal (test_deployment.DeploymentTests.test_working_installed_build_survives_source_cache_removal) ... ok
+test_guard_rejects_native_signature_configuration_change (test_deployment.RootImportTests.test_guard_rejects_native_signature_configuration_change) ... skipped 'Privileged import tests run inside the disposable container'
+test_guard_rejects_policy_change (test_deployment.RootImportTests.test_guard_rejects_policy_change) ... skipped 'Privileged import tests run inside the disposable container'
+test_guard_rejects_target_drift (test_deployment.RootImportTests.test_guard_rejects_target_drift) ... skipped 'Privileged import tests run inside the disposable container'
+test_import_copies_and_verifies_then_guard_accepts (test_deployment.RootImportTests.test_import_copies_and_verifies_then_guard_accepts) ... skipped 'Privileged import tests run inside the disposable container'
+test_import_rejects_a_changed_archive (test_deployment.RootImportTests.test_import_rejects_a_changed_archive) ... skipped 'Privileged import tests run inside the disposable container'
+test_import_rejects_new_untracked_targets (test_deployment.RootImportTests.test_import_rejects_new_untracked_targets) ... skipped 'Privileged import tests run inside the disposable container'
+test_import_respects_current_upstream_only_policy (test_deployment.RootImportTests.test_import_respects_current_upstream_only_policy) ... skipped 'Privileged import tests run inside the disposable container'
+test_changed_reviewed_release_invalidates_legacy_source_cache (test_security.CacheTrustTests.test_changed_reviewed_release_invalidates_legacy_source_cache) ... ok
+test_newer_installed_application_is_not_silently_downgraded (test_security.CacheTrustTests.test_newer_installed_application_is_not_silently_downgraded) ... ok
+test_hung_descendant_is_stopped_when_its_parent_has_exited (test_security.ExecutionTests.test_hung_descendant_is_stopped_when_its_parent_has_exited) ... ok
+test_log_cap_applies_across_phases (test_security.ExecutionTests.test_log_cap_applies_across_phases) ... ok
+test_output_flood_is_bounded_and_partial_archive_removed (test_security.ExecutionTests.test_output_flood_is_bounded_and_partial_archive_removed) ... ok
+test_archive_expansion_is_rejected_before_reading_the_payload (test_security.TrustTests.test_archive_expansion_is_rejected_before_reading_the_payload) ... ok
+test_builder_rejects_a_mirror_that_advanced_during_environment_creation (test_security.TrustTests.test_builder_rejects_a_mirror_that_advanced_during_environment_creation) ... ok
+test_mirror_credentials_never_enter_a_build_command (test_security.TrustTests.test_mirror_credentials_never_enter_a_build_command) ... ok
+test_non_string_policy_has_a_clear_configuration_error (test_security.TrustTests.test_non_string_policy_has_a_clear_configuration_error) ... ok
+test_recipe_edit_requires_reviewed_catalog_change (test_security.TrustTests.test_recipe_edit_requires_reviewed_catalog_change) ... ok
+test_termination_runs_cleanup_and_restores_the_original_handler (test_security.TrustTests.test_termination_runs_cleanup_and_restores_the_original_handler) ... ok
+test_unsupported_architecture_never_downloads_a_recipe (test_security.TrustTests.test_unsupported_architecture_never_downloads_a_recipe) ... ok
+
+----------------------------------------------------------------------
+Ran 56 tests in 11.601s
+
+OK (skipped=7)

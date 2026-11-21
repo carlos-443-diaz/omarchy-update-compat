@@ -3,10 +3,9 @@
 
 # Native x86_64 Arch build environment. Override the repository mirror to match
 # an Arch derivative's snapshot, rather than mixing a current binary with old libraries.
-FROM docker.io/library/archlinux:base
+FROM docker.io/library/archlinux@sha256:d4594bb2300cba11f41c2f27923eb56f63d9988909c402f9c95517d1e362c899
 
 ARG ARCH_MIRROR=https://geo.mirror.pkgbuild.com
-ARG JUST_VERSION=1.59.0
 ARG NFPM_VERSION=2.49.0
 ARG TARGET_SNAPSHOT
 
@@ -15,33 +14,19 @@ ARG TARGET_SNAPSHOT
 RUN test "$(uname -m)" = x86_64 \
     && test -n "$TARGET_SNAPSHOT" \
     && printf 'Server = %s/$repo/os/$arch\n' "${ARCH_MIRROR%/}" > /etc/pacman.d/mirrorlist \
-    && pacman -Syyuu --noconfirm \
-    && pacman -S --needed --noconfirm \
+    && timeout --kill-after=10s 600s pacman -Syyuu --noconfirm \
+    && timeout --kill-after=10s 600s pacman -S --needed --noconfirm \
         base-devel git ca-certificates curl unzip clang llvm openmp opencv \
         v4l-utils pam tpm2-tss gtk4 libadwaita gstreamer gst-plugins-base \
-        gst-plugins-good gst-plugin-pipewire openssl pkgconf gettext nodejs
-
-RUN curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs \
-        | sh -s -- -y --default-toolchain stable --profile minimal --component rustfmt,clippy
-ENV PATH=/root/.cargo/bin:$PATH
-
-RUN set -eu; \
-    url="https://github.com/casey/just/releases/download/${JUST_VERSION}"; \
-    archive="just-${JUST_VERSION}-x86_64-unknown-linux-musl.tar.gz"; \
-    curl -fsSL "$url/$archive" -o "/tmp/$archive"; \
-    curl -fsSL "$url/SHA256SUMS" -o /tmp/just.sha256sums; \
-    (cd /tmp && grep "  ${archive}\$" just.sha256sums | sha256sum -c -); \
-    tar -xzf "/tmp/$archive" -C /usr/local/bin just; \
-    rm "/tmp/$archive" /tmp/just.sha256sums
+        gst-plugins-good gst-plugin-pipewire openssl pkgconf gettext nodejs rust just
 
 RUN set -eu; \
     url="https://github.com/goreleaser/nfpm/releases/download/v${NFPM_VERSION}"; \
     archive="nfpm_${NFPM_VERSION}_Linux_x86_64.tar.gz"; \
-    curl -fsSL "$url/$archive" -o "/tmp/$archive"; \
-    curl -fsSL "$url/checksums.txt" -o /tmp/nfpm.sha256sums; \
-    (cd /tmp && grep "  ${archive}\$" nfpm.sha256sums | sha256sum -c -); \
+    curl --proto '=https' --tlsv1.2 --connect-timeout 15 --max-time 120 -fsSL "$url/$archive" -o "/tmp/$archive"; \
+    echo "2afaa5ffb5e3493402e31e7c67a5a1fb42133e3f66fc315ca0051934125561c7  /tmp/$archive" | sha256sum -c -; \
     tar -xzf "/tmp/$archive" -C /usr/local/bin nfpm; \
-    rm "/tmp/$archive" /tmp/nfpm.sha256sums
+    rm "/tmp/$archive"
 
 ENV LLVM_CONFIG_PATH=/usr/bin/llvm-config \
     LIBCLANG_PATH=/usr/lib \
@@ -50,7 +35,7 @@ ENV LLVM_CONFIG_PATH=/usr/bin/llvm-config \
     CC=/usr/bin/clang \
     GAZE_KCM=legacy
 
-COPY entrypoint.sh /usr/local/bin/gaze-build-entry
+COPY bounded-entry.sh /usr/local/bin/gaze-build-entry
 RUN chmod +x /usr/local/bin/gaze-build-entry
 WORKDIR /work
 ENTRYPOINT ["/usr/local/bin/gaze-build-entry"]

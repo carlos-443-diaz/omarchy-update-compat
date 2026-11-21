@@ -1,0 +1,141 @@
+{
+  "date": "2026-11-21",
+  "status": "automated_poc_proved_local_activation_pending_authentication",
+  "scope": {
+    "architecture": "x86_64",
+    "omarchy": "4.5.0-3",
+    "opencv": "5.0.0-13",
+    "gaze_start": "0.3.7-1",
+    "gaze_selected": "0.5.2-1.1"
+  },
+  "completed": {
+    "unique_tests": 56,
+    "user_run": {
+      "total": 56,
+      "root_only_skips": 7
+    },
+    "disposable_root_run": {
+      "total": 56,
+      "makepkg_skip": 1
+    },
+    "omarchy_vm_regression": {
+      "files": 435,
+      "failures": 0,
+      "files_with_skips": 6
+    },
+    "native_commit": [
+      "target drift aborted before installed state changed",
+      "native file conflict aborted before installed state changed",
+      "joint library upgrade and lower-revision publisher handoff committed",
+      "repeat selected installed package without reinstall"
+    ],
+    "cold_automatic_vm": {
+      "passed": true,
+      "component_sha256": "5f4da04a9604716b063716bc0ea103f449cbc47dcdd7efafd2943235abc7c024",
+      "source_provenance": {
+        "archives": [
+          {
+            "filename": "gaze-0.5.2-1-x86_64.pkg.tar.zst",
+            "sha256": "20829390c746937d42e28b4c9a6cde6ade104ca17c3c8725cafe48f152c64ad1"
+          },
+          {
+            "filename": "gaze-gui-0.5.2-1-x86_64.pkg.tar.zst",
+            "sha256": "15ca83daaab174fc8bdc4c562d8318bae61562e29501f76cf4794d79961de1e2"
+          },
+          {
+            "filename": "gaze-omarchy-0.5.2-1-x86_64.pkg.tar.zst",
+            "sha256": "5c663fc1a415e1254bfa45a597de10821903245a49cb3cd4c7bcdd396f25a0a2"
+          }
+        ],
+        "cache_hit": false,
+        "catalog_sha256": "a9eb20e41e59cfc84c130e5bbd2cd67d9baecc9c392688135e03f8a1fb07c037",
+        "elapsed_seconds": 1049.36,
+        "image": "2298167fdd234dd6451d2656ef0ed95c7fdaabe8ca2cb0a1115d9f4bafd55d33",
+        "limits": {
+          "compile_network": "none",
+          "cpus": 2,
+          "memory": "4GiB",
+          "pids": 512,
+          "seconds": 1800,
+          "workspace": "4GiB tmpfs"
+        },
+        "recipe_sha256": {
+          "builders/Containerfile": "74b12a84dea26186c658e9f6366dc306435c3476b40ffd240e38f21988a9ab21",
+          "builders/bounded-entry.sh": "a5953d0bb5fd2f31d9d69ac26b8826cd9aa6666b548239d4b71c07a28444d7dd",
+          "builders/gaze-fetch-ort-0.5.2.sh": "b40cae01d3edfe48e09eca7b55737ddc7fc6e6e2af02255166b5b4ede809a825",
+          "omarchy_compat/gaze.py": "169c778761175e2c68a9dbddc04ab9085b0389f54da53605b08044f625f3a145",
+          "omarchy_compat/limits.py": "d0d95a52834ecacb619fc83c9688c0d688d1004f7f002769c2c85327d676e37e"
+        },
+        "security_profile": "bounded-networkless-v1",
+        "source_commit": "459386686e83807fb3520dfc0ad77b77c8ccb647",
+        "target": "aa787521d4f3db0e4d234ef518aafc584718be81aa4126b212d82f37f3892ffd"
+      },
+      "runtime": [
+        "gazed active",
+        "loader/PAM symbol checks passed",
+        "pacman database healthy",
+        "stock updater completed",
+        "second request: KEEP, no build or install"
+      ]
+    },
+    "rustsec": {
+      "database": {
+        "advisory-count": 1555,
+        "last-commit": "55e1c3dfbd834237a05bbbf7b50ba3b5be27b662",
+        "last-updated": "2026-11-21T10:28:03+01:00"
+      },
+      "lockfile": {
+        "dependency-count": 433
+      },
+      "settings": {
+        "target_arch": [],
+        "target_os": [],
+        "severity": null,
+        "ignore": [],
+        "informational_warnings": [
+          "unmaintained",
+          "unsound",
+          "notice"
+        ]
+      },
+      "vulnerabilities": {
+        "found": false,
+        "count": 0,
+        "list": []
+      },
+      "warnings": {}
+    },
+    "final_focused_checks": [
+      "cache-independent KEEP against actual installed host Gaze and refreshed target",
+      "private root transaction configuration and native file-conflict/commit tests",
+      "actual final native image creation and repository guard; deliberately stopped before fetching/compiling again",
+      "same bounded environment creation succeeded after the interrupted host probe; no VM was running",
+      "actual host plan: ready KEEP with protected mode-0700 run directory"
+    ]
+  },
+  "revision_scope": "The cold VM used an earlier 0.2.0 snapshot. Subsequent changes added installed-cache-independent KEEP, private transaction configuration, and an image/target verification gate. These passed focused tests. The source commit, container recipe, compiler entrypoint, ORT backport and process supervisor used by the successful cold compile are unchanged; the final environment/gate was exercised separately. Further focused privacy/input checks reject authenticated build-mirror URLs before spawning commands, protect per-run directories, and reject invalid policy types. Compiler recipes and execution arguments remain unchanged.",
+  "operational_notes": [
+    "The initial 512-process nproc ceiling exhausted GPG resources; signature checks stopped deployment. Finite signed environment preparation now uses 4096, while source/dependency containers retain a verified per-container cgroup limit of 512.",
+    "One host environment probe ended with SIGKILL; its cause was not established. With no VM running, the same bounded preparation and final target gate subsequently passed. No native host package transaction occurred during either probe."
+  ],
+  "pending": [
+    "native component installation and one local automated upgrade: sudo authentication required",
+    "locked-desktop authentication and password fallback",
+    "reboot/snapshot recovery rehearsal",
+    "coordinator self-upgrade and pacman/libalpm ABI-cohort acceptance",
+    "native aarch64 source/runtime validation; backend remains explicitly unsupported",
+    "general native-repository provider precedence; present adapter uses reviewed publisher artifacts"
+  ],
+  "publication": "New implementation and evidence remain local pending activation; existing upstream PR remains documentation-only until revised.",
+  "artifacts": [
+    "automatic-vm.log",
+    "automation-user-tests.log",
+    "automation-root-tests.log",
+    "native-handoff.log",
+    "omarchy-automation-full-vm.log",
+    "cargo-audit.json",
+    "build-environment.json",
+    "build-environment.log"
+  ],
+  "prepared_native_component_sha256": "01b367d0433ccfbce057e8d43f7bff1a1052a8da3e3efd3da645f1216ad3b427"
+}

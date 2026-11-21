@@ -9,13 +9,26 @@ import shutil
 import subprocess
 import tempfile
 import platform
+from .limits import stop
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def run(args, *, env=None, cwd=None, accepted=(0,)):
-    result = subprocess.run([str(a) for a in args], text=True, capture_output=True,
-                            env=env, cwd=cwd)
+def run(args, *, env=None, cwd=None, accepted=(0,), timeout=120):
+    process = subprocess.Popen([str(a) for a in args], text=True, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE, env=env, cwd=cwd, start_new_session=True)
+    try:
+        stdout, stderr = process.communicate(timeout=timeout)
+    except subprocess.TimeoutExpired as error:
+        stop(process)
+        raise RuntimeError(f'{args[0]} exceeded its time budget.') from error
+    except BaseException:
+        stop(process)
+        raise
+    finally:
+        process.stdout.close()
+        process.stderr.close()
+    result = subprocess.CompletedProcess(args, process.returncode, stdout, stderr)
     if result.returncode not in accepted:
         raise RuntimeError(f"{args[0]} exited {result.returncode}: "
                            f"{result.stderr.strip() or result.stdout[-3000:]}")
@@ -85,7 +98,8 @@ def snapshot(source_db, config, destination, refresh=False):
         raise RuntimeError('Installed package state changed during discovery; retry.')
     if refresh:
         # Same unprivileged metadata-refresh technique used by checkupdates.
-        run(['fakeroot', 'pacman', '--config', config['path'], '--dbpath', destination,
+        prefix = [] if os.geteuid() == 0 else ['fakeroot']
+        run([*prefix, 'pacman', '--config', config['path'], '--dbpath', destination,
              '--logfile', '/dev/null', '-Sy', '--noconfirm', '--disable-sandbox-filesystem'])
     repo_hashes = {}
     for repo in config['repositories']:
@@ -103,6 +117,11 @@ def snapshot(source_db, config, destination, refresh=False):
 
 
 def prepare(dbpath, config, candidates, cache):
+    packaged = ROOT / 'native' / 'prepare'
+    if packaged.is_file():
+        return prepare_with(packaged, dbpath, config, candidates)
+    if os.geteuid() == 0:
+        raise RuntimeError('Install the native compatibility package before privileged preparation.')
     source = ROOT / 'native' / 'prepare.c'
     key = hashlib.sha256(source.read_bytes() + Path('/usr/include/alpm.h').read_bytes()
                          + platform.machine().encode()).hexdigest()[:16]
@@ -112,6 +131,10 @@ def prepare(dbpath, config, candidates, cache):
         temporary = helper.with_suffix(f'.{os.getpid()}')
         run(['cc', '-O2', '-Wall', '-Wextra', '-Werror', source, '-lalpm', '-o', temporary])
         os.replace(temporary, helper)
+    return prepare_with(helper, dbpath, config, candidates)
+
+
+def prepare_with(helper, dbpath, config, candidates):
     args = [helper, '/', str(dbpath), config['architecture']]
     for repo in config['repositories']:
         args += ['--repo', repo]

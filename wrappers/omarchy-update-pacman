@@ -1,0 +1,12 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -e
+full_upgrade=0
+for argument in "$@"; do
+  [[ $argument != "-Syu" ]] || full_upgrade=1
+done
+if [[ -n ${OMARCHY_COMPAT_BUNDLE:-} ]] && (( full_upgrade )); then
+  exec omarchy-update-compat apply "$OMARCHY_COMPAT_BUNDLE" -- "$@"
+else
+  exec /usr/share/omarchy/bin/omarchy-update-pacman "$@"
+fi

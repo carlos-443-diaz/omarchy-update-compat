@@ -1,0 +1,627 @@
+vm-boot: ssh up after 5134 ms, machine ID 77c171dabaf046fea61886b62d1aa418
+:: Synchronizing package databases...
+ omarchy downloading...
+ core downloading...
+ extra downloading...
+ multilib downloading...
+:: Starting full system upgrade...
+warning: base-devel-1-2 is up to date -- skipping
+resolving dependencies...
+looking for conflicting packages...
+
+Package (19)               Old Version   New Version           Net Change  Download Size
+
+extra/aardvark-dns                       2.1.0-3                 2.33 MiB       0.78 MiB
+extra/ada                                4.0.0-1                 0.95 MiB       0.31 MiB
+omarchy/aether             4.32.0-2      4.33.0-1               -0.01 MiB      12.95 MiB
+extra/catatonit                          0.2.1-2                 0.81 MiB       0.31 MiB
+omarchy/cliamp             2.3.0-3       2.4.1-1                36.14 MiB      21.32 MiB
+extra/conmon                             1:2.2.1-1               0.16 MiB       0.04 MiB
+extra/containers-common                  1:0.69.2-1              0.16 MiB       0.12 MiB
+omarchy/gliff              0.4.2-1       0.4.3-1                 0.00 MiB       6.29 MiB
+omarchy/herdr              0.9.1-2       0.9.5-1                 2.98 MiB       8.54 MiB
+omarchy/mise-bin           2026.11.0-1   2026.11.11-1            2.37 MiB      50.59 MiB
+extra/netavark                           2.1.0-3                10.40 MiB       3.08 MiB
+extra/nodejs                             26.12.0-1              64.12 MiB      17.48 MiB
+omarchy/omarchy-speedtest  0.2.1-1       0.2.2-1                 0.00 MiB       2.75 MiB
+omarchy/owe                0.2.13-1      0.2.14-1                0.01 MiB       0.16 MiB
+extra/passt                              2026_10_02.cba3570-1    0.85 MiB       0.29 MiB
+extra/simdjson                           1:5.0.5-1              10.27 MiB       0.44 MiB
+omarchy/superwhisper-bin   1.2.0-1       1.3.1-1                61.28 MiB      66.26 MiB
+omarchy/yt-dlp             2026.08.19-1  2026.10.26-1          -28.75 MiB       2.80 MiB
+extra/podman                             6.1.4-1                82.66 MiB      25.09 MiB
+
+Total Download Size:   219.60 MiB
+Total Installed Size:  708.44 MiB
+Net Upgrade Size:      246.74 MiB
+
+:: Proceed with installation? [Y/n] 
+:: Retrieving packages...
+ superwhisper-bin-1.3.1-1-x86_64 downloading...
+ mise-bin-2026.11.11-1-x86_64 downloading...
+ podman-6.1.4-1-x86_64 downloading...
+ cliamp-2.4.1-1-x86_64 downloading...
+ nodejs-26.12.0-1-x86_64 downloading...
+ aether-4.33.0-1-x86_64 downloading...
+ herdr-0.9.5-1-x86_64 downloading...
+ gliff-0.4.3-1-x86_64 downloading...
+ netavark-2.1.0-3-x86_64 downloading...
+ yt-dlp-2026.10.26-1-any downloading...
+ omarchy-speedtest-0.2.2-1-x86_64 downloading...
+ aardvark-dns-2.1.0-3-x86_64 downloading...
+ simdjson-1:5.0.5-1-x86_64 downloading...
+ catatonit-0.2.1-2-x86_64 downloading...
+ ada-4.0.0-1-x86_64 downloading...
+ passt-2026_10_02.cba3570-1-x86_64 downloading...
+ owe-0.2.14-1-x86_64 downloading...
+ containers-common-1:0.69.2-1-any downloading...
+ conmon-1:2.2.1-1-x86_64 downloading...
+checking keyring...
+checking package integrity...
+loading package files...
+checking for file conflicts...
+checking available disk space...
+:: Running pre-transaction hooks...
+(1/2) Checking Omarchy update entrypoint...
+(2/2) Waiting for limine-snapper-sync to finish...
+:: Processing package changes...
+installing catatonit...
+installing conmon...
+installing aardvark-dns...
+installing netavark...
+installing containers-common...
+installing passt...
+Optional dependencies for passt
+    sh: for demo script [installed]
+installing podman...
+Optional dependencies for podman
+    apparmor: for AppArmor support
+    btrfs-progs: support btrfs backend devices [installed]
+    fuse-overlayfs: for deprecated storage driver in rootless environment
+    podlet: Generate Podman Quadlet files from a Podman command, compose file, or existing object
+    podman-compose: for docker-compose compatibility
+    podman-desktop: GUI and tray to manage Podman containers (and Kubernetes pods)
+    podman-docker: for Docker-compatible CLI
+upgrading aether...
+installing ada...
+installing simdjson...
+installing nodejs...
+Optional dependencies for nodejs
+    npm: nodejs package manager
+upgrading yt-dlp...
+upgrading cliamp...
+upgrading gliff...
+upgrading herdr...
+upgrading mise-bin...
+upgrading omarchy-speedtest...
+upgrading owe...
+upgrading superwhisper-bin...
+:: Running post-transaction hooks...
+(1/8) Creating temporary files...
+(2/8) Reloading system manager configuration...
+(3/8) Reloading user manager configuration...
+(4/8) Arming ConditionNeedsUpdate...
+(5/8) Restarting active OWE user services...
+(6/8) Updating fontconfig cache...
+(7/8) Updating icon theme caches...
+(8/8) Updating the desktop file MIME type cache...
+loading packages...
+resolving dependencies...
+looking for conflicting packages...
+
+Package (24)            New Version    Net Change  Download Size
+
+extra/aalib             1.4rc5-19        0.28 MiB       0.13 MiB
+extra/blas              3.12.1-2         0.74 MiB       0.24 MiB
+extra/cblas             3.12.1-2         0.34 MiB       0.06 MiB
+extra/cdparanoia        10.2-10          0.19 MiB       0.07 MiB
+extra/gst-plugins-base  1.28.8-1         0.63 MiB       0.21 MiB
+extra/gst-plugins-good  1.28.8-1         7.43 MiB       2.32 MiB
+extra/hwloc             2.15.0-1         1.71 MiB       0.57 MiB
+extra/imlib2            1.12.7-3         1.48 MiB       0.57 MiB
+extra/lapack            3.12.1-2        15.06 MiB       4.83 MiB
+extra/libcaca           0.99.beta20-7    2.58 MiB       0.41 MiB
+extra/libdc1394         2.2.7-2          1.49 MiB       0.23 MiB
+extra/libdv             1.0.0-12         0.20 MiB       0.08 MiB
+extra/libshout          1:2.4.6-5        0.20 MiB       0.07 MiB
+extra/onetbb            2023.1.0-1       2.01 MiB       0.39 MiB
+extra/opencv            5.0.0-13       112.82 MiB      33.88 MiB
+extra/protobuf          36.1-1          18.89 MiB       3.92 MiB
+extra/taglib            2.3.2-1          2.38 MiB       0.56 MiB
+extra/twolame           0.4.0-4          0.24 MiB       0.08 MiB
+extra/verdict           1.4.5-3          0.26 MiB       0.10 MiB
+extra/wavpack           5.9.0-1          0.90 MiB       0.51 MiB
+gaze-bin                0.3.7-1         65.14 MiB               
+gaze-gui-bin            0.3.7-1          8.29 MiB               
+gaze-omarchy-bin        0.3.7-1          0.04 MiB               
+omarchy-update-compat   0.2.0-1          0.11 MiB               
+
+Total Download Size:    49.22 MiB
+Total Installed Size:  243.39 MiB
+
+:: Proceed with installation? [Y/n] 
+:: Retrieving packages...
+ opencv-5.0.0-13-x86_64 downloading...
+ lapack-3.12.1-2-x86_64 downloading...
+ protobuf-36.1-1-x86_64 downloading...
+ gst-plugins-good-1.28.8-1-x86_64 downloading...
+ hwloc-2.15.0-1-x86_64 downloading...
+ imlib2-1.12.7-3-x86_64 downloading...
+ taglib-2.3.2-1-x86_64 downloading...
+ wavpack-5.9.0-1-x86_64 downloading...
+ libcaca-0.99.beta20-7-x86_64 downloading...
+ onetbb-2023.1.0-1-x86_64 downloading...
+ blas-3.12.1-2-x86_64 downloading...
+ libdc1394-2.2.7-2-x86_64 downloading...
+ gst-plugins-base-1.28.8-1-x86_64 downloading...
+ aalib-1.4rc5-19-x86_64 downloading...
+ verdict-1.4.5-3-x86_64 downloading...
+ twolame-0.4.0-4-x86_64 downloading...
+ libdv-1.0.0-12-x86_64 downloading...
+ cdparanoia-10.2-10-x86_64 downloading...
+ libshout-1:2.4.6-5-x86_64 downloading...
+ cblas-3.12.1-2-x86_64 downloading...
+checking keyring...
+checking package integrity...
+loading package files...
+checking for file conflicts...
+checking available disk space...
+:: Running pre-transaction hooks...
+(1/1) Waiting for limine-snapper-sync to finish...
+:: Processing package changes...
+installing omarchy-update-compat...
+Optional dependencies for omarchy-update-compat
+    podman: isolated source builds [installed]
+installing blas...
+installing cblas...
+installing cdparanoia...
+installing gst-plugins-base...
+installing lapack...
+installing libdc1394...
+installing verdict...
+installing protobuf...
+installing hwloc...
+Optional dependencies for hwloc
+    cairo: PDF, Postscript, and PNG export support [installed]
+    libxml2: full XML import/export support [installed]
+installing onetbb...
+Optional dependencies for onetbb
+    python: for Python module [installed]
+installing opencv...
+Optional dependencies for opencv
+    opencv-samples: samples
+    vtk: for the viz module
+    glew: for the viz module
+    qt6-base: for the HighGUI module [installed]
+    hdf5: for the HDF5 module [installed]
+    opencl-icd-loader: For coding with OpenCL [installed]
+    java-runtime: Java interface
+installing aalib...
+Optional dependencies for aalib
+    xorg-fonts-misc: x11 driver
+    xorg-mkfontscale: x11 driver
+installing imlib2...
+Optional dependencies for imlib2
+    libheif: HEIF loader (for AVIF) [installed]
+    libid3tag: ID3 loader
+    libjxl: JXL loader [installed]
+    librsvg: SVG loader [installed]
+    libspectre: PS loader [installed]
+    libwebp: WEBP loader [installed]
+    openjpeg2: J2K loader [installed]
+installing libcaca...
+Optional dependencies for libcaca
+    python: Python bindings [installed]
+installing libdv...
+installing libshout...
+installing taglib...
+installing twolame...
+installing wavpack...
+installing gst-plugins-good...
+Optional dependencies for gst-plugins-good
+    jack: JACK backend [installed]
+installing gaze-bin...
+
+[Gaze Notice] Added a faillock preauth gate and "auth sufficient pam_gaze.so" to /etc/pam.d/sudo.
+That file belongs to the sudo package, so pacman now treats it as modified and
+will write /etc/pam.d/sudo.pacnew on later sudo updates; merge those by hand.
+To opt out, delete the pam_gaze.so line. Gaze will not put it back.
+See https://gaze.gundulabs.com/guide/pam
+
+installing gaze-gui-bin...
+installing gaze-omarchy-bin...
+
+Gaze Omarchy integration installed. From your unlocked desktop, without sudo:
+
+    gaze-omarchy enable
+    gaze add-face default
+    gaze auth
+    gaze-omarchy doctor
+
+After package or Omarchy updates, run gaze-omarchy doctor. Reload the plugin
+with gaze-omarchy enable while unlocked. Before removing this package, run
+gaze-omarchy disable to restore the stock lock.
+
+Docs: https://gaze.gundulabs.com/guide/omarchy
+:: Running post-transaction hooks...
+(1/6) Reloading system manager configuration...
+(2/6) Arming ConditionNeedsUpdate...
+(3/6) Reloading system bus configuration...
+(4/6) Updating icon theme caches...
+(5/6) Updating the info directory file...
+(6/6) Updating the desktop file MIME type cache...
+true
+Tracking gaze: prefer-upstream
+PASS: reproduced published Gaze/OpenCV mismatch from real Gaze 0.3.7
+
+Prune package cache
+==> no candidate packages found for pruning
+
+
+Create system snapshot
+Snapshots can be selected during boot.
+
+Update signing keys
+Keys are correct
+Gaze  CHECKING   Installed 0.3.7-1; checking the target system.
+Gaze  PLAN       0.5.2: Publisher binaries do not fit this snapshot; an approved source recipe is available.
+Gaze  BUILDING   Compiling 0.5.2 for this system. Detailed output is saved in the run log.
+Gaze  BUILDING   Compiling… 0m 15s
+Gaze  BUILDING   Compiling… 0m 30s
+Gaze  BUILDING   Compiling… 0m 45s
+Gaze  BUILDING   Compiling… 1m 00s
+Gaze  BUILDING   Compiling… 1m 15s
+Gaze  BUILDING   Compiling… 1m 30s
+Gaze  BUILDING   Compiling… 1m 45s
+Gaze  BUILDING   Compiling… 2m 00s
+Gaze  BUILDING   Compiling… 2m 15s
+Gaze  BUILDING   Compiling… 2m 30s
+Gaze  BUILDING   Compiling… 2m 45s
+Gaze  BUILDING   Compiling… 3m 00s
+Gaze  BUILDING   Compiling… 3m 15s
+Gaze  BUILDING   Compiling… 3m 30s
+Gaze  BUILDING   Compiling… 3m 45s
+Gaze  BUILDING   Compiling… 4m 00s
+Gaze  BUILDING   Compiling… 4m 15s
+Gaze  BUILDING   Compiling… 4m 30s
+Gaze  BUILDING   Compiling… 4m 45s
+Gaze  BUILDING   Compiling… 5m 00s
+Gaze  BUILDING   Compiling… 5m 15s
+Gaze  BUILDING   Compiling… 5m 30s
+Gaze  BUILDING   Compiling… 5m 45s
+Gaze  BUILDING   Compiling… 6m 00s
+Gaze  BUILDING   Compiling… 6m 15s
+Gaze  BUILDING   Compiling… 6m 30s
+Gaze  BUILDING   Compiling… 6m 45s
+Gaze  BUILDING   Compiling… 7m 00s
+Gaze  BUILDING   Compiling… 7m 15s
+Gaze  BUILDING   Compiling… 7m 30s
+Gaze  BUILDING   Compiling… 7m 45s
+Gaze  BUILDING   Compiling… 8m 00s
+Gaze  BUILDING   Compiling… 8m 15s
+Gaze  BUILDING   Compiling… 8m 30s
+Gaze  BUILDING   Compiling… 8m 45s
+Gaze  BUILDING   Compiling… 9m 00s
+Gaze  BUILDING   Compiling… 9m 15s
+Gaze  BUILDING   Compiling… 9m 30s
+Gaze  BUILDING   Compiling… 9m 45s
+Gaze  BUILDING   Compiling… 10m 00s
+Gaze  BUILDING   Compiling… 10m 15s
+Gaze  BUILDING   Compiling… 10m 30s
+Gaze  BUILDING   Compiling… 10m 45s
+Gaze  BUILDING   Compiling… 11m 00s
+Gaze  BUILDING   Compiling… 11m 15s
+Gaze  BUILDING   Compiling… 11m 30s
+Gaze  BUILDING   Compiling… 11m 45s
+Gaze  BUILDING   Compiling… 12m 00s
+Gaze  BUILDING   Compiling… 12m 15s
+Gaze  BUILDING   Compiling… 12m 30s
+Gaze  BUILDING   Compiling… 12m 45s
+Gaze  BUILDING   Compiling… 13m 00s
+Gaze  BUILDING   Compiling… 13m 15s
+Gaze  BUILDING   Compiling… 13m 30s
+Gaze  BUILDING   Compiling… 13m 45s
+Gaze  BUILDING   Compiling… 14m 00s
+Gaze  BUILDING   Compiling… 14m 15s
+Gaze  BUILDING   Compiling… 14m 30s
+Gaze  BUILDING   Compiling… 14m 45s
+Gaze  BUILDING   Compiling… 15m 00s
+Gaze  BUILDING   Compiling… 15m 15s
+Gaze  BUILDING   Compiling… 15m 30s
+Gaze  BUILDING   Compiling… 15m 45s
+Gaze  BUILDING   Compiling… 16m 00s
+Gaze  BUILDING   Compiling… 16m 15s
+Gaze  BUILDING   Compiling… 16m 30s
+Gaze  BUILDING   Compiling… 16m 45s
+Gaze  BUILDING   Compiling… 17m 00s
+Gaze  BUILDING   Compiling… 17m 15s
+Gaze  READY      Compatible package group selected and checked.
+
+Update system packages
+Gaze  INSTALLING With the system update...
+
+:: Synchronizing package databases...
+
+ omarchy-compat
+
+ omarchy
+
+ core
+
+ extra
+
+ multilib
+
+ omarchy-compat        883.0   B  0.00   B/s 00:00 [----------------------] 100%
+ omarchy-compat        883.0   B   431 KiB/s 00:00 [----------------------] 100%
+ extra is up to date omarchy is up to date core is up to date multilib is up to date:: Starting full system upgrade...
+
+resolving dependencies...
+
+looking for conflicting packages...
+
+
+
+Packages (3) gaze-bin-0.5.2-1.1  gaze-gui-bin-0.5.2-1.1
+
+             gaze-omarchy-bin-0.5.2-1.1
+
+
+
+Total Download Size:   26.77 MiB
+
+Total Installed Size:  80.71 MiB
+
+Net Upgrade Size:       7.24 MiB
+
+
+
+:: Proceed with installation? [Y/n] 
+
+:: Retrieving packages...
+
+ gaze-bin-0.5.2-1.1-x86_64
+
+ Total (0/3)             0.0   B  0.00   B/s 00:00 [Co  o  o  o  o  o  o  ]   0%
+
+
+ gaze-gui-bin-0.5.2-1.1-x86_64
+
+ Total (0/3)             0.0   B  0.00   B/s 00:00 [Co  o  o  o  o  o  o  ]   0%
+
+
+ gaze-omarchy-bin-0.5.2-1.1-x86_64
+
+ Total (0/3)             0.0   B  0.00   B/s 00:00 [Co  o  o  o  o  o  o  ]   0%
+
+
+ gaze-bin-0.5.2-1...    16.0 KiB  4.00   B/s --:-- [Co  o  o  o  o  o  o  ]   0%
+ Total (0/3)            16.0 KiB  4.00   B/s --:-- [Co  o  o  o  o  o  o  ]   0%
+ gaze-gui-bin-0.5...    16.0 KiB  4.00   B/s --:-- [Co  o  o  o  o  o  o  ]   0%
+ gaze-omarchy-bin...    16.0 KiB  4.00   B/s 48:43 [-----------C o  o  o  ]  52%
+ gaze-bin-0.5.2-1...    24.2 MiB   807 MiB/s 00:00 [----------------------] 100%
+ gaze-gui-bin-0.5...     2.5 MiB  84.4 MiB/s 00:00 [----------------------] 100%
+ gaze-omarchy-bin...    30.2 KiB  1008 KiB/s 00:00 [----------------------] 100%
+ Total (3/3)            26.8 MiB   765 MiB/s 00:00 [----------------------] 100%
+
+
+(0/3) checking keys in keyring                     [Co  o  o  o  o  o  o  ]   0%
+(1/3) checking keys in keyring                     [-------c  o  o  o  o  ]  33%
+(2/3) checking keys in keyring                     [--------------C o  o  ]  66%
+(3/3) checking keys in keyring                     [----------------------] 100%
+
+
+(0/3) checking package integrity                   [Co  o  o  o  o  o  o  ]   0%
+(1/3) checking package integrity                   [-------------------C  ]  90%
+(2/3) checking package integrity                   [---------------------c]  99%
+(3/3) checking package integrity                   [----------------------] 100%
+
+
+(0/3) loading package files                        [Co  o  o  o  o  o  o  ]   0%
+(1/3) loading package files                        [-------------------C  ]  90%
+(2/3) loading package files                        [---------------------c]  99%
+(3/3) loading package files                        [----------------------] 100%
+
+
+(0/3) checking for file conflicts                  [Co  o  o  o  o  o  o  ]   0%
+(1/3) checking for file conflicts                  [-------c  o  o  o  o  ]  33%
+(2/3) checking for file conflicts                  [--------------C o  o  ]  66%
+(3/3) checking for file conflicts                  [----------------------] 100%
+
+
+(0/3) checking available disk space                [Co  o  o  o  o  o  o  ]   0%
+(1/3) checking available disk space                [-------c  o  o  o  o  ]  33%
+(2/3) checking available disk space                [--------------C o  o  ]  66%
+(3/3) checking available disk space                [----------------------] 100%
+
+
+:: Running pre-transaction hooks...
+
+(1/3) Rechecking approved compatibility target...
+
+(2/3) Checking Omarchy update entrypoint...
+
+(3/3) Waiting for limine-snapper-sync to finish...
+
+:: Processing package changes...
+
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [Co  o  o  o  o  o  o  ]   0%
+(1/3) upgrading gaze-bin                           [----------------------] 100%
+
+
+(2/3) upgrading gaze-gui-bin                       [Co  o  o  o  o  o  o  ]   0%
+(2/3) upgrading gaze-gui-bin                       [----------------------] 100%
+
+
+(3/3) upgrading gaze-omarchy-bin                   [Co  o  o  o  o  o  o  ]   0%
+(3/3) upgrading gaze-omarchy-bin                   [----------------------] 100%
+
+
+
+
+Gaze Omarchy integration installed. From your unlocked desktop, without sudo:
+
+
+
+    gaze-omarchy enable
+
+    gaze add-face default
+
+    gaze test
+
+    gaze-omarchy doctor
+
+
+
+After package or Omarchy updates, run gaze-omarchy doctor. Reload the plugin
+
+with gaze-omarchy enable while unlocked. Before removing this package, run
+
+gaze-omarchy disable to restore the stock lock.
+
+
+
+Docs: https://gaze.gundulabs.com/guide/omarchy
+
+:: Running post-transaction hooks...
+
+(1/6) Reloading system manager configuration...
+
+(2/6) Enqueuing marked services...
+
+(3/6) Arming ConditionNeedsUpdate...
+
+(4/6) Reloading system bus configuration...
+
+(5/6) Updating icon theme caches...
+
+(6/6) Updating the desktop file MIME type cache...
+
+warning: insufficient columns available for table display
+Gaze  DONE       Installed 0.5.2 — local build.
+
+Orphan system packages
+  yt-dlp-ejs
+
+
+Removing orphan system packages
+checking dependencies...
+
+
+
+Package (2)  Old Version  Net Change 
+
+
+
+deno         2.9.8-1      -107.34 MiB
+
+yt-dlp-ejs   0.8.0-1        -0.16 MiB
+
+
+
+Total Removed Size:  107.50 MiB
+
+
+
+:: Do you want to remove these packages? [Y/n] 
+
+:: Running pre-transaction hooks...
+
+(1/1) Waiting for limine-snapper-sync to finish...
+
+:: Processing package changes...
+
+(1/2) removing yt-dlp-ejs                          [Co  o  o  o  o  o  o  ]   0%
+(1/2) removing yt-dlp-ejs                          [Co  o  o  o  o  o  o  ]   0%
+(1/2) removing yt-dlp-ejs                          [----------------------] 100%
+
+
+(2/2) removing deno                                [Co  o  o  o  o  o  o  ]   0%
+(2/2) removing deno                                [Co  o  o  o  o  o  o  ]   0%
+(2/2) removing deno                                [----------------------] 100%
+
+
+:: Running post-transaction hooks...
+
+(1/1) Arming ConditionNeedsUpdate...
+
+
+
+
+Restarting shell
+All plugins have been reloaded
+
+Update mise tools
+mise All tools are up to date
+
+Update AUR packages
+:: Searching AUR for updates...
+ -> Packages not in AUR: omarchy-update-compat
+ there is nothing to do
+
+
+PASS: uncached source build and native deployment completed automatically
+{"archives": [{"filename": "gaze-0.5.2-1-x86_64.pkg.tar.zst", "sha256": "20829390c746937d42e28b4c9a6cde6ade104ca17c3c8725cafe48f152c64ad1"}, {"filename": "gaze-gui-0.5.2-1-x86_64.pkg.tar.zst", "sha256": "15ca83daaab174fc8bdc4c562d8318bae61562e29501f76cf4794d79961de1e2"}, {"filename": "gaze-omarchy-0.5.2-1-x86_64.pkg.tar.zst", "sha256": "5c663fc1a415e1254bfa45a597de10821903245a49cb3cd4c7bcdd396f25a0a2"}], "cache_hit": false, "catalog_sha256": "a9eb20e41e59cfc84c130e5bbd2cd67d9baecc9c392688135e03f8a1fb07c037", "elapsed_seconds": 1049.36, "image": "2298167fdd234dd6451d2656ef0ed95c7fdaabe8ca2cb0a1115d9f4bafd55d33", "limits": {"compile_network": "none", "cpus": 2, "memory": "4GiB", "pids": 512, "seconds": 1800, "workspace": "4GiB tmpfs"}, "recipe_sha256": {"builders/Containerfile": "74b12a84dea26186c658e9f6366dc306435c3476b40ffd240e38f21988a9ab21", "builders/bounded-entry.sh": "a5953d0bb5fd2f31d9d69ac26b8826cd9aa6666b548239d4b71c07a28444d7dd", "builders/gaze-fetch-ort-0.5.2.sh": "b40cae01d3edfe48e09eca7b55737ddc7fc6e6e2af02255166b5b4ede809a825", "omarchy_compat/gaze.py": "169c778761175e2c68a9dbddc04ab9085b0389f54da53605b08044f625f3a145", "omarchy_compat/limits.py": "d0d95a52834ecacb619fc83c9688c0d688d1004f7f002769c2c85327d676e37e"}, "security_profile": "bounded-networkless-v1", "source_commit": "459386686e83807fb3520dfc0ad77b77c8ccb647", "target": "aa787521d4f3db0e4d234ef518aafc584718be81aa4126b212d82f37f3892ffd"}
+Created symlink '/etc/systemd/system/multi-user.target.wants/gazed.service' → '/usr/lib/systemd/system/gazed.service'.
+active
+No database errors have been found!
+gaze 0.5.2
+
+Prune package cache
+==> no candidate packages found for pruning
+
+
+Create system snapshot
+Snapshots can be selected during boot.
+
+Update signing keys
+Keys are correct
+Gaze  CHECKING   Installed 0.5.2-1.1; checking the target system.
+Gaze  PLAN       0.5.2: A previous local build still satisfies the target transaction; no rebuild is needed.
+Gaze  KEEP       Installed build still works; no rebuild or installation is needed.
+
+Update system packages
+:: Synchronizing package databases...
+
+ omarchy
+
+ core
+
+ extra
+
+ multilib
+
+ multilib is up to date core is up to date extra is up to date omarchy is up to date:: Starting full system upgrade...
+
+ there is nothing to do
+
+Gaze  KEEP       Installed build still works; nothing to install.
+
+
+Restarting shell
+All plugins have been reloaded
+
+Update mise tools
+mise All tools are up to date
+
+Update AUR packages
+:: Searching AUR for updates...
+ -> Packages not in AUR: omarchy-update-compat
+ there is nothing to do
+
+
+PASS: repeat request keeps the compatible installed build without rebuilding or reinstalling
+PASS: original mismatch -> automatic build -> guarded deploy -> stock updater -> repeat KEEP

@@ -1,0 +1,36 @@
+Reviewed source build; dependencies fetched before offline compilation.
+STEP 1/11: FROM docker.io/library/archlinux@sha256:d4594bb2300cba11f41c2f27923eb56f63d9988909c402f9c95517d1e362c899
+STEP 2/11: ARG ARCH_MIRROR=https://geo.mirror.pkgbuild.com
+--> Using cache b9b373a4478a55628c844c1227cb80fe6ecdae582e02fc89530fa36ae8d7896d
+--> b9b373a4478a
+STEP 3/11: ARG NFPM_VERSION=2.49.0
+--> Using cache 90f18d07bc269a27a6a114bc4f4fb8faf5037ca7de3dce0889713001783d7a3b
+--> 90f18d07bc26
+STEP 4/11: ARG TARGET_SNAPSHOT
+--> Using cache 796046408cd1daaaea37a61e1c3c82e6669e8518e7c6fa5155a4224151cc6c3c
+--> 796046408cd1
+STEP 5/11: RUN test "$(uname -m)" = x86_64     && test -n "$TARGET_SNAPSHOT"     && printf 'Server = %s/$repo/os/$arch\n' "${ARCH_MIRROR%/}" > /etc/pacman.d/mirrorlist     && timeout --kill-after=10s 600s pacman -Syyuu --noconfirm     && timeout --kill-after=10s 600s pacman -S --needed --noconfirm         base-devel git ca-certificates curl unzip clang llvm openmp opencv         v4l-utils pam tpm2-tss gtk4 libadwaita gstreamer gst-plugins-base         gst-plugins-good gst-plugin-pipewire openssl pkgconf gettext nodejs rust just
+--> Using cache 467119d2df3726dcb78e0f77a4dd6861256b8d3b362971f721fae5a4ebf3b08d
+--> 467119d2df37
+STEP 6/11: RUN set -eu;     url="https://github.com/goreleaser/nfpm/releases/download/v${NFPM_VERSION}";     archive="nfpm_${NFPM_VERSION}_Linux_x86_64.tar.gz";     curl --proto '=https' --tlsv1.2 --connect-timeout 15 --max-time 120 -fsSL "$url/$archive" -o "/tmp/$archive";     echo "2afaa5ffb5e3493402e31e7c67a5a1fb42133e3f66fc315ca0051934125561c7  /tmp/$archive" | sha256sum -c -;     tar -xzf "/tmp/$archive" -C /usr/local/bin nfpm;     rm "/tmp/$archive"
+--> Using cache 9ae690ff54c8ca0b8c79c097da5fc50580c433954300037c525acab178c98c86
+--> 9ae690ff54c8
+STEP 7/11: ENV LLVM_CONFIG_PATH=/usr/bin/llvm-config     LIBCLANG_PATH=/usr/lib     CLANG_PATH=/usr/bin/clang     CXX=/usr/bin/clang++     CC=/usr/bin/clang     GAZE_KCM=legacy
+--> Using cache 24039fd239962a55f5763f9d771f1830a50ca672c23eba9364148bba2f2a7df1
+--> 24039fd23996
+STEP 8/11: COPY bounded-entry.sh /usr/local/bin/gaze-build-entry
+--> Using cache 2dc937c17c91e5a9177a9a4df57769d784db83d5335e70c7d514cf790cdf04b0
+--> 2dc937c17c91
+STEP 9/11: RUN chmod +x /usr/local/bin/gaze-build-entry
+--> Using cache d096709c89ce68a3968589a38d617a37eff276d29c4115352df11a6041aec786
+--> d096709c89ce
+STEP 10/11: WORKDIR /work
+--> Using cache 33f2aa27308c0f8b0e20a647457cd52bb0fc456f5bf2a23ffaf955ea5a6df004
+--> 33f2aa27308c
+STEP 11/11: ENTRYPOINT ["/usr/local/bin/gaze-build-entry"]
+--> Using cache 688e87885bd71547782fbe5a14e3b8f483e1ea2a394ed56ef08b77da017f4351
+COMMIT localhost/omarchy-compat-gaze:6ee83a8e0bc13d56a7c06c17
+--> 688e87885bd7
+Successfully tagged localhost/omarchy-compat-gaze:6ee83a8e0bc13d56a7c06c17
+Successfully tagged localhost/omarchy-compat-gaze:fc271ac5d6ee144895802d5b
+688e87885bd71547782fbe5a14e3b8f483e1ea2a394ed56ef08b77da017f4351

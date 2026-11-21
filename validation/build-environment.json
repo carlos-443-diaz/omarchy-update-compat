@@ -1,0 +1,38 @@
+{
+  "image": "688e87885bd71547782fbe5a14e3b8f483e1ea2a394ed56ef08b77da017f4351",
+  "target": {
+    "architecture": "x86_64",
+    "repositories": {
+      "omarchy": "6e8f65e785acc40c50665d102f4f6dfe8576d41771049ab4e40481811d4b41c2",
+      "core": "7015ab8595669a6c1e4e2fb6de64e0043c8eb99bb41be368417254078dabcd1e",
+      "extra": "6fe33bbb22b7e0eaef48ccc35b5896ee6612675b462373880b27cf58311b0a53",
+      "multilib": "51ad7d4b67c146fb5865f9e95f91cd64dfa8b0710ec3cf67bd4ba730e1f5a162"
+    },
+    "repository_order": [
+      "omarchy",
+      "core",
+      "extra",
+      "multilib"
+    ],
+    "servers": {
+      "omarchy": [
+        "https://pkgs.omarchy.org/stable/x86_64"
+      ],
+      "core": [
+        "https://stable-mirror.omarchy.org/core/os/x86_64"
+      ],
+      "extra": [
+        "https://stable-mirror.omarchy.org/extra/os/x86_64"
+      ],
+      "multilib": [
+        "https://stable-mirror.omarchy.org/multilib/os/x86_64"
+      ]
+    },
+    "ignore": [],
+    "ignore_groups": []
+  },
+  "source_commit": "459386686e83807fb3520dfc0ad77b77c8ccb647",
+  "catalog_sha256": "28a9498b356984e35d574b61993d58723a27309d700a59dfb588b4921cae7256",
+  "verified": true,
+  "scope": "Actual final source-build environment creation and repository guard; deliberately stopped before dependency fetch/compilation. Compiler execution was separately proved by the official-VM cold run."
+}

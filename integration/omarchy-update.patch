@@ -1,13 +1,13 @@
-diff --git i/bin/omarchy-update w/bin/omarchy-update
-index 69a9d34..a9108db 100755
---- i/bin/omarchy-update
+diff --git c/bin/omarchy-update w/bin/omarchy-update
+index 69a9d34..50a98e0 100755
+--- c/bin/omarchy-update
 +++ w/bin/omarchy-update
 @@ -10,6 +10,8 @@ set -e
  
  update_stay_awake_stopped=0
  sudo_keepalive_pid=""
 +compat_directory=""
-+unset OMARCHY_COMPAT_BUNDLE
++unset OMARCHY_COMPAT_BUNDLE OMARCHY_COMPAT_SESSION OMARCHY_COMPAT_NATIVE
  
  # Ask for the password once, then keep sudo's timestamp fresh so long package
  # downloads, migrations, hooks, and mise never outlast it and prompt again.
@@ -19,37 +19,46 @@ index 69a9d34..a9108db 100755
    if (( update_stay_awake_stopped == 0 )); then
      omarchy-update-stay-awake stop || status=1
    fi
-@@ -104,6 +107,16 @@ if [[ ${1:-} == "-y" ]] || omarchy-update-confirm; then
+@@ -104,10 +107,27 @@ if [[ ${1:-} == "-y" ]] || omarchy-update-confirm; then
    omarchy-update-dev
    omarchy-update-keyring
  
-+  # Experimental POC: build outside pacman's transaction and pass only a
-+  # prepared bundle to the existing guarded transaction helper. The POC's
-+  # commit bridge is deliberately restricted to disposable containers.
-+  if [[ ${OMARCHY_COMPAT_POC:-} == "1" ]]; then
++  # Tracked applications opt into the packaged coordinator. Builds happen as
++  # the desktop user; the pacman helper owns the privileged artifact handoff.
++  if [[ -s $HOME/.config/omarchy/update-compat.toml ]]; then
++    if omarchy-cmd-missing omarchy-update-compat; then
++      echo "Install omarchy-update-compat to handle the tracked applications." >&2
++      exit 1
++    fi
 +    compat_directory=$(mktemp -d)
-+    omarchy-update-compat stage --refresh --json >"$compat_directory/plan.json"
-+    OMARCHY_COMPAT_BUNDLE=$(jq -r '.bundle // empty' "$compat_directory/plan.json")
-+    export OMARCHY_COMPAT_BUNDLE
++    export OMARCHY_COMPAT_SESSION="$compat_directory/plan.json"
++    omarchy-update-compat prepare-session "$OMARCHY_COMPAT_SESSION"
++    OMARCHY_COMPAT_BUNDLE=$(omarchy-update-compat session-bundle "$OMARCHY_COMPAT_SESSION")
++    export OMARCHY_COMPAT_BUNDLE OMARCHY_COMPAT_NATIVE=1
 +  fi
 +
    # Migrations ship with the packages installed here and are written against
    # them, so everything below waits on this finishing. An upgrade that stopped
    # takes the update with it rather than migrating against what is still on disk.
-diff --git i/bin/omarchy-update-aur-pkgs w/bin/omarchy-update-aur-pkgs
-index f7c7fe1..c60bae4 100755
---- i/bin/omarchy-update-aur-pkgs
+   omarchy-update-system-pkgs
++  if [[ ${OMARCHY_COMPAT_NATIVE:-} == "1" ]]; then
++    omarchy-update-compat verify-installed "$OMARCHY_COMPAT_SESSION"
++  fi
+ 
+   # Migrations call the shell over IPC, so give them one running current code.
+   if omarchy-migrate --pending >/dev/null; then
+diff --git c/bin/omarchy-update-aur-pkgs w/bin/omarchy-update-aur-pkgs
+index f7c7fe1..93bab62 100755
+--- c/bin/omarchy-update-aur-pkgs
 +++ w/bin/omarchy-update-aur-pkgs
-@@ -9,10 +9,18 @@
+@@ -9,10 +9,16 @@
  # whichever go is on PATH uses its own root.
  unset GOROOT GOBIN
  
-+# Protect the selected application only for this update's AUR pass. A later
-+# compatibility plan may select publisher packages again; no permanent pin.
 +aur_ignore="gcc14,gcc14-libs"
-+if [[ -n ${OMARCHY_COMPAT_BUNDLE:-} ]]; then
-+  managed=$(jq -er '.targets | join(",")' "$OMARCHY_COMPAT_BUNDLE") || exit 1
-+  aur_ignore+=",$managed"
++if [[ -n ${OMARCHY_COMPAT_SESSION:-} ]]; then
++  managed=$(omarchy-update-compat aur-ignore "$OMARCHY_COMPAT_SESSION") || exit 1
++  [[ -z $managed ]] || aur_ignore+=",$managed"
 +fi
 +
  if pacman -Qem >/dev/null; then
@@ -60,61 +69,78 @@ index f7c7fe1..c60bae4 100755
      echo
    else
      echo -e "\e[31m\n$(omarchy-i18n update.aurUnavailable)\e[0m"
-diff --git i/bin/omarchy-update-pacman w/bin/omarchy-update-pacman
-index 66f6673..a703c42 100755
---- i/bin/omarchy-update-pacman
+diff --git c/bin/omarchy-update-pacman w/bin/omarchy-update-pacman
+index 66f6673..163859a 100755
+--- c/bin/omarchy-update-pacman
 +++ w/bin/omarchy-update-pacman
-@@ -22,4 +22,31 @@ if [[ -n ${LC_ALL:-} ]]; then
+@@ -22,4 +22,14 @@ if [[ -n ${LC_ALL:-} ]]; then
    env_args+=(LC_ALL="$LC_ALL")
  fi
  
 -exec sudo env "${env_args[@]}" "${scope[@]}" pacman "$@"
-+compat_args=()
-+full_upgrade=0
-+for argument in "$@"; do
-+  [[ $argument != "-Syu" ]] || full_upgrade=1
-+done
-+if [[ -n ${OMARCHY_COMPAT_BUNDLE:-} ]] && (( full_upgrade )); then
-+  # The experimental bridge refuses live hosts. Keep its failure status:
-+  # process substitution with mapfile would hide validation failures.
-+  compat_directory=$(mktemp -d)
-+  if omarchy-update-compat transaction-args "$OMARCHY_COMPAT_BUNDLE" \
-+    --output-dir "$compat_directory/transaction" >"$compat_directory/arguments"; then
-+    mapfile -d '' -t compat_args <"$compat_directory/arguments"
-+    # Pacman's download sandbox user must traverse the private parent to
-+    # read the temporary repository; its contents remain non-writable.
-+    chmod 711 "$compat_directory"
-+    if sudo env "${env_args[@]}" "${scope[@]}" pacman "${compat_args[@]}" "$@"; then
-+      status=0
-+    else
-+      status=$?
++transaction=(pacman)
++if [[ -n ${OMARCHY_COMPAT_BUNDLE:-} ]]; then
++  for argument in "$@"; do
++    if [[ $argument == "-Syu" ]]; then
++      transaction=(/usr/lib/omarchy-update-compat/privileged transaction "$OMARCHY_COMPAT_BUNDLE" --)
++      break
 +    fi
-+  else
-+    status=$?
-+  fi
-+  rm -rf -- "$compat_directory"
-+  exit "$status"
-+else
-+  exec sudo env "${env_args[@]}" "${scope[@]}" pacman "$@"
++  done
 +fi
-diff --git i/test/shell.d/update-pacman-test.sh w/test/shell.d/update-pacman-test.sh
-index 8af6766..40ec020 100755
---- i/test/shell.d/update-pacman-test.sh
++
++exec sudo env "${env_args[@]}" "${scope[@]}" "${transaction[@]}" "$@"
+diff --git c/default/update-compatibility-api w/default/update-compatibility-api
+new file mode 100644
+index 0000000..d00491f
+--- /dev/null
++++ w/default/update-compatibility-api
+@@ -0,0 +1 @@
++1
+diff --git c/test/shell.d/update-pacman-test.sh w/test/shell.d/update-pacman-test.sh
+index 8af6766..00f7ee8 100755
+--- c/test/shell.d/update-pacman-test.sh
 +++ w/test/shell.d/update-pacman-test.sh
-@@ -39,3 +39,16 @@ LC_ALL=C run_helper -Syu
+@@ -39,3 +39,13 @@ LC_ALL=C run_helper -Syu
  [[ $(cat "$test_tmp/call") == "env OMARCHY_UPDATE_PACMAN=1 LC_ALL=C ${expected_scope}pacman -Syu" ]] ||
    fail "helper forwards LC_ALL to the transaction" "$(cat "$test_tmp/call")"
  pass "helper forwards LC_ALL to the transaction"
 +
-+# A failed compatibility preparation must stop before privilege escalation.
++OMARCHY_COMPAT_BUNDLE="$test_tmp/transaction.json" run_helper -Syu --noconfirm
++[[ $(cat "$test_tmp/call") == "env OMARCHY_UPDATE_PACMAN=1 ${expected_scope}/usr/lib/omarchy-update-compat/privileged transaction $test_tmp/transaction.json -- -Syu --noconfirm" ]] ||
++  fail "a staged full upgrade uses the fixed privileged handoff" "$(cat "$test_tmp/call")"
++pass "a staged full upgrade uses the fixed privileged handoff and scope"
++
++OMARCHY_COMPAT_BUNDLE="$test_tmp/transaction.json" run_helper -S --needed archlinux-keyring
++[[ $(cat "$test_tmp/call") == "env OMARCHY_UPDATE_PACMAN=1 ${expected_scope}pacman -S --needed archlinux-keyring" ]] ||
++  fail "keyring bootstrap retains the normal native helper"
++pass "the compatibility handoff only applies to the main system upgrade"
+diff --git c/test/shell.d/update-sequence-test.sh w/test/shell.d/update-sequence-test.sh
+index 41bed32..c987c87 100755
+--- c/test/shell.d/update-sequence-test.sh
++++ w/test/shell.d/update-sequence-test.sh
+@@ -148,3 +148,25 @@ diff <(expected_steps) <(steps_run) >"$test_tmp/order" ||
+   fail "a failed mise update skips later update steps" "$(cat "$test_tmp/order")"
+ grep -q "omarchy update mise" "$test_tmp/err" || fail "the tool update failure has no retry guidance"
+ pass "a mise failure still finishes the update, offers a reboot and explains how to retry"
++
++# Compatibility preparation must fail before any main package transaction or
++# migration. Only the user's explicit tracking config enables the phase.
++mkdir -p "$SUDO_TEST_HOME/.config/omarchy"
++printf '[applications]\ngaze = "prefer-upstream"\n' >"$SUDO_TEST_HOME/.config/omarchy/update-compat.toml"
++cat >"$stub_bin/omarchy-cmd-missing" <<'STUB'
++#!/bin/bash
++exit 1
++STUB
 +cat >"$stub_bin/omarchy-update-compat" <<'STUB'
 +#!/bin/bash
++printf 'compat:%s\n' "$1" >>"$STEP_LOG"
 +exit 20
 +STUB
-+chmod +x "$stub_bin/omarchy-update-compat"
-+rm -f "$test_tmp/call"
-+status=0
-+OMARCHY_COMPAT_BUNDLE="$test_tmp/bundle.json" run_helper -Syu || status=$?
-+[[ $status == "20" && ! -e $test_tmp/call ]] ||
-+  fail "rejected compatibility bundle stops before pacman or sudo"
-+pass "rejected compatibility bundle stops before pacman or sudo"
++chmod +x "$stub_bin/omarchy-cmd-missing" "$stub_bin/omarchy-update-compat"
++if run_update -y; then
++  fail "a rejected compatibility plan must stop the update"
++fi
++if grep -qE '^omarchy-update-system-pkgs |^omarchy-migrate ' "$test_tmp/steps"; then
++  fail "a rejected compatibility plan still upgrades packages or migrates"
++fi
++pass "a rejected compatibility plan stops before system packages and migrations"

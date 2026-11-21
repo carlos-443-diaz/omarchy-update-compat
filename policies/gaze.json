@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "release": {
+    "tag": "v0.5.2",
+    "version": "0.5.2",
+    "source_commit": "459386686e83807fb3520dfc0ad77b77c8ccb647",
+    "cargo_lock_sha256": "a308039187fa19b77c617cef8927363b4da37e295d324836401b3ef14fc6a2b0"
+  },
+  "assets": {
+    "gaze-0.5.2-1-x86_64.pkg.tar.zst": {
+      "sha256": "1deb8dc604fee0c43add66174a3f6eba4f55e95ca16a86b4b699496d85b2e550",
+      "url": "https://github.com/GunduLabs/gaze/releases/download/v0.5.2/gaze-0.5.2-1-x86_64.pkg.tar.zst"
+    },
+    "gaze-gui-0.5.2-1-x86_64.pkg.tar.zst": {
+      "sha256": "4ce11d7e3af7bb9268896c1be74be58a73b7eb2edd13195d3df1520a180453f5",
+      "url": "https://github.com/GunduLabs/gaze/releases/download/v0.5.2/gaze-gui-0.5.2-1-x86_64.pkg.tar.zst"
+    },
+    "gaze-omarchy-0.5.2-1-x86_64.pkg.tar.zst": {
+      "sha256": "e85e3d114365f7914fee4680f946c1803be0a9818e8b6ef47a3e65fef1fa19cf",
+      "url": "https://github.com/GunduLabs/gaze/releases/download/v0.5.2/gaze-omarchy-0.5.2-1-x86_64.pkg.tar.zst"
+    }
+  },
+  "security_profile": "bounded-networkless-v1",
+  "recipe_sha256": {
+    "builders/Containerfile": "74b12a84dea26186c658e9f6366dc306435c3476b40ffd240e38f21988a9ab21",
+    "builders/bounded-entry.sh": "a5953d0bb5fd2f31d9d69ac26b8826cd9aa6666b548239d4b71c07a28444d7dd",
+    "builders/gaze-fetch-ort-0.5.2.sh": "b40cae01d3edfe48e09eca7b55737ddc7fc6e6e2af02255166b5b4ede809a825",
+    "omarchy_compat/gaze.py": "24e55f446d015f6eb519af9f82287a5b910501496cf2a57a8a91eb51476ea3ba",
+    "omarchy_compat/limits.py": "d0d95a52834ecacb619fc83c9688c0d688d1004f7f002769c2c85327d676e37e"
+  }
+}

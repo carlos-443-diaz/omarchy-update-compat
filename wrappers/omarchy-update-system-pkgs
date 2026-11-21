@@ -1,0 +1,12 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+set -e
+if [[ ${OMARCHY_COMPAT_NATIVE:-} != "1" ]]; then
+  omarchy-update-compat prepare-session "$OMARCHY_COMPAT_SESSION"
+  OMARCHY_COMPAT_BUNDLE=$(omarchy-update-compat session-bundle "$OMARCHY_COMPAT_SESSION")
+  export OMARCHY_COMPAT_BUNDLE
+fi
+/usr/share/omarchy/bin/omarchy-update-system-pkgs "$@"
+if [[ ${OMARCHY_COMPAT_NATIVE:-} != "1" ]]; then
+  omarchy-update-compat verify-installed "$OMARCHY_COMPAT_SESSION"
+fi
